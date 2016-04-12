@@ -14,17 +14,18 @@
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
- <<< YOUR TEAM NAME >>>
+ <<< !!RAYCING TEAM!! >>>
 
-     Master of Documentation:
-     Master of Structure:
-     Master of Performance:
-     Master of Theory:
+     Master of Documentation: Claudia Meinen
+     Master of Structure: Tobias Picker
+     Master of Performance: Chuxiao Jiang
+     Master of Theory: Severin Strerath
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 import ui.Window;
 import raytracer.Raytracer;
+import utils.Log;
 
 // Main application class. This is the routine called by the JVM to run the program.
 public class Main {
@@ -41,6 +42,7 @@ public class Main {
         draw(renderWindow);
 
         renderWindow.setTimeToLabel(String.valueOf(stopTime(tStart)));
+
     }
 
     private static void draw(Window renderWindow){

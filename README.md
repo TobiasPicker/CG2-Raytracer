@@ -1,1 +1,1 @@
-Sev war hier# CG2-Raytracer
+# CG2-Raytracer
