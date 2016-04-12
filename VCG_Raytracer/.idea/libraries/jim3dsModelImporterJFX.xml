@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="jim3dsModelImporterJFX">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/JFX3DModelImporters_EA_2014-02-09/jim3dsModelImporterJFX.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/JFX3DModelImporters_EA_2014-02-09/jimColModelImporterJFX.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/JFX3DModelImporters_EA_2014-02-09/jimFxmlModelImporterJFX.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/JFX3DModelImporters_EA_2014-02-09/jimObjModelImporterJFX.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/JFX3DModelImporters_EA_2014-02-09/jimStlMeshImporterJFX.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/JFX3DModelImporters_EA_2014-02-09/jimX3dModelImporterJFX.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
