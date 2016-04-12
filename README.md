@@ -1,4 +1,1 @@
-# CG2-Raytracer
-Sev war hier
-Claudia auch
-Chuxiao da
+Sev war hier# CG2-Raytracer
