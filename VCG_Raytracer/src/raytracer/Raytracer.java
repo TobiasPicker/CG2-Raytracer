@@ -26,15 +26,20 @@ public class Raytracer {
     private BufferedImage mBufferedImage;
     private Window mRenderWindow;
 
-    public Raytracer(Window renderWindow){
+    public Raytracer(Window renderWindow) {
         mBufferedImage = renderWindow.getBufferedImage();
         mRenderWindow = renderWindow;
     }
 
-    public void renderScene(){
+    public void renderScene() {
         Log.print(this, "Start rendering");
 
-        mRenderWindow.setPixel(mBufferedImage, RgbColor.BLACK, new Vec2(0,0));
-        IO.saveImageToPng(mBufferedImage, "raytracing.png");
+        for (float y = 0; y < 600; y++) {
+            for (float x = 0; x < 800; x++) {
+                mRenderWindow.setPixel(mBufferedImage, new RgbColor(x/800, y/600, 0), new Vec2(x, y));
+            }
+        }
+
+                IO.saveImageToPng(mBufferedImage, "raytracing.png");
     }
 }
