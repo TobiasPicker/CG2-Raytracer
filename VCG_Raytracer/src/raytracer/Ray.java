@@ -17,4 +17,7 @@ public class Ray{
         this.length = length;
     }
 
+    public Vec3 getDirection(){
+        return this.direction;
+    }
 }

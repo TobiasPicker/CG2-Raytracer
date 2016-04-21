@@ -23,9 +23,11 @@
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
+import scene.Camera;
 import ui.Window;
 import raytracer.Raytracer;
 import utils.Log;
+import utils.Vec3;
 
 // Main application class. This is the routine called by the JVM to run the program.
 public class Main {
@@ -33,24 +35,44 @@ public class Main {
     static int IMAGE_WIDTH = 800;
     static int IMAGE_HEIGHT = 600;
 
+    //I don't know if this should belong here, maybe we have to get camera out again
+    static Camera camera;
+
     // Initial method. This is where the show begins.
     public static void main(String[] args){
         long tStart = System.currentTimeMillis();
 
         Window renderWindow = new Window(IMAGE_WIDTH, IMAGE_HEIGHT);
 
-        draw(renderWindow);
+        //creating a camera
+        camera = setupCamera();
+
+        draw(renderWindow, camera);
 
         renderWindow.setTimeToLabel(String.valueOf(stopTime(tStart)));
 
     }
 
-    private static void draw(Window renderWindow){
-        raytraceScene(renderWindow);
+    //added an object camera in draw und raytraceScene so the direction of a ray could be calculated in class Raytracer
+    private static void draw(Window renderWindow, Camera camera){
+        raytraceScene(renderWindow, camera);
     }
 
-    private static void raytraceScene(Window renderWindow){
-        Raytracer raytracer = new Raytracer(renderWindow);
+    //specifying the parameters of the camera and creating the camera object;
+    private static Camera setupCamera(){
+        Vec3 position = new Vec3(0,0.5f,1);
+        Vec3 centerOfInterest = new Vec3(0,0,0);
+        Vec3 userUp = new Vec3(0,1,0);
+        float viewAngle =  3.1349f;
+        float focalLength = 1.0f;
+
+        Camera camera = new Camera(position, userUp, centerOfInterest, viewAngle, focalLength);
+        return camera;
+    }
+
+    //added camera
+    private static void raytraceScene(Window renderWindow, Camera camera){
+        Raytracer raytracer = new Raytracer(renderWindow, camera);
 
         raytracer.renderScene();
     }

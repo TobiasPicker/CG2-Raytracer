@@ -1,5 +1,6 @@
 package scene;
 
+import utils.Log;
 import utils.Vec3;
 
 /**
@@ -21,6 +22,7 @@ public class Camera extends SceneObject {
         this.centerOfInterest = centerOfInterest;
         this.viewAngle = viewAngle;
         this.focalLength = focalLength;
+        calculateCamCoord();
     }
 
     //calculation of cameracoordinationsystem
@@ -34,9 +36,24 @@ public class Camera extends SceneObject {
     }
 
     public Vec3 calculateRayDirection(int x, int y){
-        Vec3 rayDirection = new Vec3();
+        Vec3 rayDirection;
 
-        //in arbeit
+        //normalize x and y pixel positions
+        float yNorm, xNorm;
+        xNorm = 2*((x + 0.5f)/800)-1;
+        yNorm = 2*((y + 0.5f)/600)-1;
+
+        //calculating direction of ray from cameraposition to center of pixel x,y
+        rayDirection = camViewVec.multScalar(focalLength);
+        Log.print(rayDirection, String.valueOf(rayDirection));
+        rayDirection = rayDirection.add(camUpVec.multScalar(yNorm));
+        Log.print(rayDirection, String.valueOf(camUpVec.multScalar(yNorm)));
+        rayDirection = rayDirection.add(camSideVec.multScalar(xNorm));
+        Log.print(rayDirection, String.valueOf(camSideVec.multScalar(xNorm)));
+
+        rayDirection.normalize();
+
+        //Log.print(rayDirection, String.valueOf(camSideVec.multScalar(xNorm)));
 
         return rayDirection;
     }
