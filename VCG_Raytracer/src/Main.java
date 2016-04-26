@@ -60,7 +60,7 @@ public class Main {
 
     //specifying the parameters of the camera and creating the camera object;
     private static Camera setupCamera(){
-        Vec3 position = new Vec3(0,0.5f,1);
+        Vec3 position = new Vec3(0,0,1);
         Vec3 centerOfInterest = new Vec3(0,0,0);
         Vec3 userUp = new Vec3(0,1,0);
         float viewAngle =  3.1349f;

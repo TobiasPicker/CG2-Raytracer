@@ -1,6 +1,7 @@
 package scene;
 
 import utils.Log;
+import utils.Vec2;
 import utils.Vec3;
 
 /**
@@ -28,34 +29,33 @@ public class Camera extends SceneObject {
     //calculation of cameracoordinationsystem
     private void calculateCamCoord(){
         this.camViewVec = centerOfInterest.sub(position);
-        this.camViewVec.normalize();
+        //normalize
+        this.camViewVec = new Vec3(camViewVec.x/camViewVec.length(),camViewVec.y/camViewVec.length(),camViewVec.z/camViewVec.length());
+        Log.print(camViewVec, String.valueOf(camViewVec));
+
         this.camSideVec = camViewVec.cross(userUp);
-        this.camSideVec.normalize();
+        //normalize
+        this.camSideVec = new Vec3(camSideVec.x/camSideVec.length(),camSideVec.y/camSideVec.length(),camSideVec.z/camSideVec.length());
+        Log.print(camSideVec, String.valueOf(camSideVec));
+
         this.camUpVec = camSideVec.cross(camViewVec);
-        this.camUpVec.normalize();
+        //normalize
+        this.camUpVec = new Vec3(camUpVec.x/camUpVec.length(),camUpVec.y/camUpVec.length(),camUpVec.z/camUpVec.length());
+        Log.print(camUpVec, String.valueOf(camUpVec));
     }
 
-    public Vec3 calculateRayDirection(int x, int y){
-        Vec3 rayDirection;
+    public Vec3 calculateDestinationPoint(int x, int y){
 
         //normalize x and y pixel positions
         float yNorm, xNorm;
         xNorm = 2*((x + 0.5f)/800)-1;
         yNorm = 2*((y + 0.5f)/600)-1;
 
-        //calculating direction of ray from cameraposition to center of pixel x,y
-        rayDirection = camViewVec.multScalar(focalLength);
-        Log.print(rayDirection, String.valueOf(rayDirection));
-        rayDirection = rayDirection.add(camUpVec.multScalar(yNorm));
-        Log.print(rayDirection, String.valueOf(camUpVec.multScalar(yNorm)));
-        rayDirection = rayDirection.add(camSideVec.multScalar(xNorm));
-        Log.print(rayDirection, String.valueOf(camSideVec.multScalar(xNorm)));
-
-        rayDirection.normalize();
-
-        //Log.print(rayDirection, String.valueOf(camSideVec.multScalar(xNorm)));
-
-        return rayDirection;
+        Vec3 destinationPoint = new Vec3(camSideVec.x * xNorm,camUpVec.y * yNorm, camViewVec.z * focalLength);
+        return destinationPoint;
     }
 
+    public Vec3 getPosition() {
+        return this.position;
+    }
 }

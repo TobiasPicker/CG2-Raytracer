@@ -47,11 +47,11 @@ public class Raytracer {
     }
 
 
-    //sends a Ray and throghs back an RgbColor
+    //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
-        Ray primaryRay = new Ray(camera.calculateRayDirection(x, y), 100);
+        Ray primaryRay = new Ray(camera.getPosition(), camera.calculateDestinationPoint(x, y), 100);
 
         //Log.print(primaryRay, String.valueOf(primaryRay.getDirection()));
-        return new RgbColor(primaryRay.getDirection().x, primaryRay.getDirection().y, -1* primaryRay.getDirection().z);
+        return new RgbColor(Math.abs(primaryRay.getDirection().x), Math.abs(primaryRay.getDirection().y),1+primaryRay.getDirection().z);
     }
 }

@@ -23,7 +23,7 @@ public class Vec3 {
 
     public Vec3 normalize(){
         float length = this.length();
-        return new Vec3(this.x / length, this.y / length, this.z / length);
+        return new Vec3(this.x/length, this.y/length, this.z/length);
     }
 
     public float length(){
