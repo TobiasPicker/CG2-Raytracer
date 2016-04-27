@@ -16,7 +16,7 @@
 
 package raytracer;
 
-import scene.Camera;
+import scene.Scene;
 import ui.Window;
 import utils.*;
 
@@ -26,12 +26,12 @@ public class Raytracer {
 
     private BufferedImage mBufferedImage;
     private Window mRenderWindow;
-    private Camera camera;
+    private Scene scene;
 
-    public Raytracer(Window renderWindow,Camera camera) {
+    public Raytracer(Window renderWindow, Scene scene) {
         mBufferedImage = renderWindow.getBufferedImage();
         mRenderWindow = renderWindow;
-        this.camera = camera;
+        this.scene = scene;
     }
 
     public void renderScene() {
@@ -49,9 +49,9 @@ public class Raytracer {
 
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
-        Ray primaryRay = new Ray(camera.getPosition(), camera.calculateDestinationPoint(x, y), 100);
+        Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y), 100);
 
         //Log.print(primaryRay, String.valueOf(primaryRay.getDirection()));
-        return new RgbColor(Math.abs(primaryRay.getDirection().x), Math.abs(primaryRay.getDirection().y),1+primaryRay.getDirection().z);
+        return new RgbColor(Math.abs(primaryRay.getDirection().x), Math.abs(primaryRay.getDirection().y),-0.5f*primaryRay.getDirection().z);
     }
 }
