@@ -1,12 +1,7 @@
 package scene;
 
-import utils.Log;
-import utils.Vec2;
 import utils.Vec3;
 
-/**
- * Created by PraktikumCG on 19.04.2016.
- */
 public class Camera extends SceneObject {
 
     private Vec3 centerOfInterest = new Vec3();
@@ -28,6 +23,7 @@ public class Camera extends SceneObject {
 
     //calculation of cameracoordinationsystem
     private void calculateCamCoord(){
+        /*
         this.camViewVec = centerOfInterest.sub(position);
         //normalize
         this.camViewVec = new Vec3(camViewVec.x/camViewVec.length(),camViewVec.y/camViewVec.length(),camViewVec.z/camViewVec.length());
@@ -42,6 +38,16 @@ public class Camera extends SceneObject {
         //normalize
         this.camUpVec = new Vec3(camUpVec.x/camUpVec.length(),camUpVec.y/camUpVec.length(),camUpVec.z/camUpVec.length());
         Log.print(camUpVec, String.valueOf(camUpVec));
+        */
+
+        this.camViewVec = centerOfInterest.sub(position);
+        this.camViewVec = camViewVec.normalize();
+
+        this.camSideVec = camViewVec.cross(userUp);
+        this.camSideVec = camSideVec.normalize();
+
+        this.camUpVec = camSideVec.cross(camViewVec);
+        this.camUpVec = camUpVec.normalize();
     }
 
     public Vec3 calculateDestinationPoint(int x, int y){

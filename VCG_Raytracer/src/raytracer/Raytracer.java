@@ -19,7 +19,6 @@ package raytracer;
 import scene.Scene;
 import ui.Window;
 import utils.*;
-
 import java.awt.image.BufferedImage;
 
 public class Raytracer {
@@ -35,23 +34,19 @@ public class Raytracer {
     }
 
     public void renderScene() {
-        Log.print(this, "Start rendering");
-
         for (int y = 0; y < 600; y++) {
             for (int x = 0; x < 800; x++) {
                 mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x, y), new Vec2(x, y));
             }
         }
 
-                IO.saveImageToPng(mBufferedImage, "raytracing.png");
+        IO.saveImageToPng(mBufferedImage, "raytracing.png");
     }
-
 
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
-        Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y), 100);
+        Ray primaryRay = new Ray(Scene.getCamera().getPosition(), Scene.getCamera().calculateDestinationPoint(x, y), 100);
 
-        //Log.print(primaryRay, String.valueOf(primaryRay.getDirection()));
         return new RgbColor(Math.abs(primaryRay.getDirection().x), Math.abs(primaryRay.getDirection().y),-0.5f*primaryRay.getDirection().z);
     }
 }

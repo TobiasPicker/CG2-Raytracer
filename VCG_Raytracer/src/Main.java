@@ -23,12 +23,9 @@
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
-import scene.Camera;
-import scene.Light;
 import scene.Scene;
 import ui.Window;
 import raytracer.Raytracer;
-import utils.Log;
 import utils.Vec3;
 
 // Main application class. This is the routine called by the JVM to run the program.
@@ -37,10 +34,6 @@ public class Main {
     static int IMAGE_WIDTH = 800;
     static int IMAGE_HEIGHT = 600;
 
-    //I don't know if this should belong here, maybe we have to get camera out again
-    static Camera camera;
-
-    //jupp camera kommt dann hierrein
     static Scene scene;
 
     // Initial method. This is where the show begins.
@@ -51,26 +44,15 @@ public class Main {
 
         setupScene();
 
-        //creating a camera
-        //camera = scene.getCamera();
-
-        //lights are added to scene.lightList
-        setupLights();
-
         draw(renderWindow, scene);
 
         renderWindow.setTimeToLabel(String.valueOf(stopTime(tStart)));
-
     }
 
-    //added an object camera in draw and raytraceScene so the direction of a ray could be calculated in class Raytracer
-    private static void draw(Window renderWindow, Scene scene){
-        raytraceScene(renderWindow, scene);
-    }
-
-    //
+    //builds the scene
     private static void setupScene(){
         setupCamera();
+        setupLights();
     }
 
     //specifying the parameters of the camera and adding the camera object to scene
@@ -86,13 +68,20 @@ public class Main {
 
     //specifying the parameters of the lights and adding the light objects to scene.lightList
     private static void setupLights(){
-        scene.createLight(new Vec3(0,5,1), new Vec3(0.75f,0.75f,0.25f));
+        Vec3 position = new Vec3(0,5,1);
+        Vec3 color = new Vec3(0.75f,0.75f,0.25f);
+
+        scene.createLight(position, color);
+    }
+
+    //added an object camera in draw and raytraceScene so the direction of a ray could be calculated in class Raytracer
+    private static void draw(Window renderWindow, Scene scene){
+        raytraceScene(renderWindow, scene);
     }
 
     //added camera
     private static void raytraceScene(Window renderWindow, Scene scene){
         Raytracer raytracer = new Raytracer(renderWindow, scene);
-
         raytracer.renderScene();
     }
 

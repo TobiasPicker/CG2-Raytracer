@@ -2,9 +2,6 @@ package scene;
 
 import utils.Vec3;
 
-/**
- * Created by PraktikumCG on 19.04.2016.
- */
 public class SceneObject {
     protected Vec3 position = new Vec3();
 
