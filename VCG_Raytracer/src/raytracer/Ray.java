@@ -18,4 +18,8 @@ public class Ray{
         direction = new Vec3(direction.x/direction.length(),direction.y/direction.length(),direction.z/direction.length());
         return direction;
     }
+
+    public Vec3 getpOrigin(){
+        return pOrigin;
+    }
 }

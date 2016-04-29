@@ -8,5 +8,4 @@ public class SceneObject {
     public SceneObject(Vec3 position){
         this.position = position;
     }
-
 }

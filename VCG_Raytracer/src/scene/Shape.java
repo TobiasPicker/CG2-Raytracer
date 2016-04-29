@@ -1,5 +1,6 @@
 package scene;
 
+import raytracer.Ray;
 import utils.Vec3;
 
 public class Shape extends SceneObject {
@@ -8,7 +9,8 @@ public class Shape extends SceneObject {
         super(position);
     }
 
-    public void intersect(){
-
+    public double intersect(Ray ray){
+        return 0.0;
     }
+
 }
