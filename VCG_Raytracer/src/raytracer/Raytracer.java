@@ -50,20 +50,30 @@ public class Raytracer {
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
         Ray primaryRay = new Ray(Scene.getCamera().getPosition(), Scene.getCamera().calculateDestinationPoint(x, y), 100);
-        RgbColor pixelColor = new RgbColor(0f,1f,0f);
-
-//        System.out.println(scene.shapeList);
+        RgbColor pixelColor = new RgbColor(.1f,.1f,.1f);
+        double distance=0;
+        int index = 0;
 
         for(int i=0; i<scene.shapeList.size();i++) {
-            //ray does not hit --> set backgroundColor
-            if (scene.shapeList.get(i).intersect(primaryRay) == 0) {
-                pixelColor = new RgbColor(.1f, .1f, .1f);
-            }
-            //ray does hit --> set sphereColor
-            else {
-                pixelColor = pixelColor.add(scene.shapeList.get(i).getColor());
+            if(i==0){
+                distance = scene.shapeList.get(i).intersect(primaryRay);
+            }else{
+                if(scene.shapeList.get(i).intersect(primaryRay)<distance){
+                    distance = scene.shapeList.get(i).intersect(primaryRay);
+                    index = i;
+                }
             }
         }
+
+        //ray does not hit --> set backgroundColor
+        if (scene.shapeList.get(index).intersect(primaryRay) == 0) {
+            pixelColor = new RgbColor(1f, .1f, .1f);
+        }
+        //ray does hit --> set sphereColor
+        else {
+            pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().getColor());
+        }
+
 
         return pixelColor;
     }

@@ -1,20 +1,23 @@
 package scene;
 
 import raytracer.Ray;
-import utils.RgbColor;
+import utils.Material;
 import utils.Vec3;
 
 public class Shape extends SceneObject {
 
-    public Shape(Vec3 position){
+    private Material material;
+
+    public Shape(Vec3 position, Material material){
         super(position);
+        this.material = material;
     }
 
     public double intersect(Ray ray){
         return 0.0;
     }
 
-    public RgbColor getColor(){
-        return new RgbColor(0,0,0);
+    public Material getMaterial(){
+        return this.material;
     }
 }

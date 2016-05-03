@@ -1,5 +1,6 @@
 package scene;
 
+import utils.Material;
 import utils.RgbColor;
 import utils.Vec3;
 import raytracer.Ray;
@@ -8,12 +9,12 @@ public class Sphere extends Shape {
     private float radius;
     private RgbColor color = new RgbColor(1, 0f, 0f);
 
-    public Sphere(Vec3 position,float radius){
-        super(position);
+    public Sphere(Vec3 position, float radius, Material material){
+        super(position, material);
         this.radius = radius;
     }
 
-    public double intersect(Ray ray){
+    public  double intersect(Ray ray){
 
         //calculation of intersection between ray and sphere
         float b = 2*(ray.getpOrigin().scalar(ray.getDirection()));
@@ -22,13 +23,13 @@ public class Sphere extends Shape {
 
         //ray does not hit
         if(discriminant<0){
-            return 0.0f;
+            return 0.0;
         }
         //ray does hit
         else {
             double t;
-            double t0 = -b - Math.sqrt(discriminant) / 2;
-            double t1 = -b + Math.sqrt(discriminant) / 2;
+            double t0 = -b - Math.sqrt(discriminant) / 2d;
+            double t1 = -b + Math.sqrt(discriminant) / 2d;
 
             if(Math.abs(t0)<Math.abs(t1)){
                 t = t0;

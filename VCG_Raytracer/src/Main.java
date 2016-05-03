@@ -27,6 +27,8 @@ import scene.Scene;
 import scene.Sphere;
 import ui.Window;
 import raytracer.Raytracer;
+import utils.Material;
+import utils.RgbColor;
 import utils.Vec3;
 
 // Main application class. This is the routine called by the JVM to run the program.
@@ -54,17 +56,17 @@ public class Main {
     private static void setupScene(){
         setupCamera();
         setupLights();
-        scene.createSphere(new Vec3(0,0,-5), .1f);
-        scene.createSphere(new Vec3(0,0,-5), .1f);
+        scene.createSphere(new Vec3(0,0,-5), 1f, new Material(new RgbColor(0,1,0)));
+        //scene.createSphere(new Vec3(0,0,-5), .1f, new Material(new RgbColor(0,1,0)));
     }
 
     //specifying the parameters of the camera and adding the camera object to scene
     private static void setupCamera(){
-        Vec3 position = new Vec3(0,0,1);
+        Vec3 position = new Vec3(0,0,10);
         Vec3 userUp = new Vec3(0,1,0);
         Vec3 centerOfInterest = new Vec3(0,0,0);
-        float viewAngle =  3.1349f;
-        float focalLength = 1.0f;
+        float viewAngle =  3f;
+        float focalLength = 30f;
 
         scene.createCamera(position,userUp,centerOfInterest,viewAngle,focalLength);
     }

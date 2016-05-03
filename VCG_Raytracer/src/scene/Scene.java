@@ -1,5 +1,6 @@
 package scene;
 
+import utils.Material;
 import utils.Vec3;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ public class Scene {
     private static Camera camera;
 
     //adds a sphere to shapeList
-    public static void createSphere(Vec3 position, float radius){
-        shapeList.add(new Sphere(position, radius));
+    public static void createSphere(Vec3 position, float radius, Material material){
+        shapeList.add(new Sphere(position, radius, material));
     }
 
     //adds a light to lightList
