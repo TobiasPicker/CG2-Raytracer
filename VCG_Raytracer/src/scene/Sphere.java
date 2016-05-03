@@ -6,7 +6,7 @@ import raytracer.Ray;
 public class Sphere extends Shape {
 
     private float radius;
-    private RgbColor color = new RgbColor(1, 0.5f, 0.1f);
+    private RgbColor color = new RgbColor(1, 0f, 0f);
 
     public Sphere(Vec3 position,float radius){
         super(position);
@@ -26,7 +26,15 @@ public class Sphere extends Shape {
         }
         //ray does hit
         else {
-            double t = -b - Math.sqrt(discriminant) / 2;
+            double t;
+            double t0 = -b - Math.sqrt(discriminant) / 2;
+            double t1 = -b + Math.sqrt(discriminant) / 2;
+
+            if(Math.abs(t0)<Math.abs(t1)){
+                t = t0;
+            }else{
+                t = t1;
+            }
 
             if (t > 10E-9) {
                 return t;

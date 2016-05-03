@@ -24,6 +24,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 import scene.Scene;
+import scene.Sphere;
 import ui.Window;
 import raytracer.Raytracer;
 import utils.Vec3;
@@ -53,6 +54,8 @@ public class Main {
     private static void setupScene(){
         setupCamera();
         setupLights();
+        scene.createSphere(new Vec3(0,0,-5), .1f);
+        scene.createSphere(new Vec3(0,0,-5), .1f);
     }
 
     //specifying the parameters of the camera and adding the camera object to scene

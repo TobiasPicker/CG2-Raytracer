@@ -8,8 +8,8 @@ import java.util.List;
 //class contains information of all objects in the scene
 public class Scene {
 
-    private static List<Shape> shapeList = new ArrayList<Shape>();
-    private static List<Light> lightList = new ArrayList<Light>();
+    public static List<Shape> shapeList = new ArrayList<Shape>();
+    public static List<Light> lightList = new ArrayList<Light>();
     private static Camera camera;
 
     //adds a sphere to shapeList

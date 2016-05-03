@@ -29,9 +29,6 @@ public class Raytracer {
     private Window mRenderWindow;
     private Scene scene;
 
-    //only for testing
-    private Sphere sphere = new Sphere(new Vec3(0,0,-5), .1f);
-    //
     public Raytracer(Window renderWindow, Scene scene) {
         mBufferedImage = renderWindow.getBufferedImage();
         mRenderWindow = renderWindow;
@@ -53,14 +50,21 @@ public class Raytracer {
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
         Ray primaryRay = new Ray(Scene.getCamera().getPosition(), Scene.getCamera().calculateDestinationPoint(x, y), 100);
+        RgbColor pixelColor = new RgbColor(0f,1f,0f);
 
-        //ray does not hit --> set backgroundColor
-        if(sphere.intersect(primaryRay)==0){
-            return new RgbColor(.1f,.1f,.1f);
+//        System.out.println(scene.shapeList);
+
+        for(int i=0; i<scene.shapeList.size();i++) {
+            //ray does not hit --> set backgroundColor
+            if (scene.shapeList.get(i).intersect(primaryRay) == 0) {
+                pixelColor = new RgbColor(.1f, .1f, .1f);
+            }
+            //ray does hit --> set sphereColor
+            else {
+                pixelColor = pixelColor.add(scene.shapeList.get(i).getColor());
+            }
         }
-        //ray does hit --> set sphereColor
-        else {
-            return sphere.getColor();
-        }
+
+        return pixelColor;
     }
 }

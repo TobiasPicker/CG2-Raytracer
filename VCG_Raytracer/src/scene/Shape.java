@@ -1,6 +1,7 @@
 package scene;
 
 import raytracer.Ray;
+import utils.RgbColor;
 import utils.Vec3;
 
 public class Shape extends SceneObject {
@@ -13,4 +14,7 @@ public class Shape extends SceneObject {
         return 0.0;
     }
 
+    public RgbColor getColor(){
+        return new RgbColor(0,0,0);
+    }
 }
