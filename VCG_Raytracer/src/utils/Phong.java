@@ -19,9 +19,13 @@ public class Phong extends Material {
     public RgbColor calculatePhong(Vec3 lightVec, Vec3 normal, RgbColor lightColor, Vec3 viewVec){
 
         Vec3 refVec = normal.multScalar(2 * normal.scalar(lightVec)).sub(lightVec);
+        refVec = refVec.normalize();
 
-        return lightColor.multRGB(diffuse.multScalar(normal.scalar(lightVec)).add(specular.multScalar((float)Math.pow(viewVec.scalar(refVec), n))));
-
+        if(viewVec.scalar(refVec)<0) {
+            return lightColor.multRGB(diffuse.multScalar(normal.scalar(lightVec)));
+        }else {
+            return lightColor.multRGB(diffuse.multScalar(normal.scalar(lightVec)).add(specular.multScalar((float) Math.pow(viewVec.scalar(refVec), n))));
+        }
 
     }
 }
