@@ -6,11 +6,13 @@ import utils.Vec3;
 
 public class Shape extends SceneObject {
 
+    public String objectType;
     private Material material;
 
-    public Shape(Vec3 position, Material material){
+    public Shape(Vec3 position, Material material, String objectType){
         super(position);
         this.material = material;
+        this.objectType = objectType;
     }
 
     public double intersect(Ray ray){

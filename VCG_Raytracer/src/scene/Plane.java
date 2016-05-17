@@ -8,7 +8,7 @@ public class Plane extends Shape {
     private Vec3 normal;
 
     public Plane(Vec3 position, Vec3 normal, Material material){
-        super(position, material);
+        super(position, material, "Plane");
         this.normal = normal;
     }
 }

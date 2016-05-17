@@ -1,17 +1,18 @@
 package scene;
 
+import utils.RgbColor;
 import utils.Vec3;
 
 public class Light extends SceneObject{
 
-    Vec3 color;
+    RgbColor color;
 
-    public Light(Vec3 position, Vec3 color){
+    public Light(Vec3 position, RgbColor color){
         super(position);
         this.color = color;
     }
 
-    public Vec3 getColor(){
+    public RgbColor getColor(){
         return color;
     }
 }

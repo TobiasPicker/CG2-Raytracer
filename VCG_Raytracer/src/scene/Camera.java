@@ -55,6 +55,7 @@ public class Camera extends SceneObject {
 
         Vec3 destinationPoint = centerPoint.add(widthVec.multScalar(xNorm));
         destinationPoint = destinationPoint.add(heightVec.multScalar(yNorm));
+        destinationPoint.y = -destinationPoint.y;
         return destinationPoint;
     }
 

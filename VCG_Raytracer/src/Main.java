@@ -27,6 +27,7 @@ import scene.Scene;
 import scene.Sphere;
 import ui.Window;
 import raytracer.Raytracer;
+import utils.Lambert;
 import utils.Material;
 import utils.RgbColor;
 import utils.Vec3;
@@ -56,13 +57,13 @@ public class Main {
     private static void setupScene(){
         setupCamera();
         setupLights();
-        scene.createSphere(new Vec3(0,0,-5), 1f, new Material(new RgbColor(0,1,0)));
+        scene.createSphere(new Vec3(0,0,-5), 1f, new Lambert(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
         //scene.createSphere(new Vec3(0,0,-5), .1f, new Material(new RgbColor(0,1,0)));
     }
 
     //specifying the parameters of the camera and adding the camera object to scene
     private static void setupCamera(){
-        Vec3 position = new Vec3(0,0,10);
+        Vec3 position = new Vec3(0,0,5);
         Vec3 userUp = new Vec3(0,1,0);
         Vec3 centerOfInterest = new Vec3(0,0,0);
         float viewAngle =  3f;
@@ -73,10 +74,9 @@ public class Main {
 
     //specifying the parameters of the lights and adding the light objects to scene.lightList
     private static void setupLights(){
-        Vec3 position = new Vec3(0,5,1);
-        Vec3 color = new Vec3(0.75f,0.75f,0.25f);
 
-        scene.createLight(position, color);
+        scene.createLight(new Vec3(8,5,5f), new RgbColor(0.75f,0.75f,0.75f), "PointLight");
+        scene.createAmbientLight(new RgbColor(.25f,.25f,.25f));
     }
 
     //added an object camera in draw and raytraceScene so the direction of a ray could be calculated in class Raytracer

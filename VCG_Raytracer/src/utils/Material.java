@@ -1,17 +1,21 @@
 package utils;
 
-/**
- * Created by PraktikumCG on 03.05.2016.
- */
 public class Material {
 
-    RgbColor color;
+    public String materialType;
+    RgbColor ambient;
 
-    public Material(RgbColor color){
-        this.color = color;
+
+
+    public Material(RgbColor ambient, String materialType){
+        this.ambient = ambient;
+        this.materialType = materialType;
     }
 
-    public RgbColor getColor(){
-        return this.color;
+    public RgbColor calculateLambert(Vec3 lightVec, Vec3 normal, RgbColor lightColor){
+        return ambient;
     }
+
+    public RgbColor calculateAmbient(RgbColor ambientLightColor){
+        return ambient.multRGB(ambientLightColor);}
 }

@@ -67,11 +67,24 @@ public class Raytracer {
 
         //ray does not hit --> set backgroundColor
         if (scene.shapeList.get(index).intersect(primaryRay) == 0) {
-            pixelColor = new RgbColor(1f, .1f, .1f);
+            pixelColor = new RgbColor(0f, 0f, 0f);
         }
         //ray does hit --> set sphereColor
         else {
-            pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().getColor());
+            Intersection intersection = new Intersection(primaryRay, (float)distance, scene.shapeList.get(index));
+            pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
+            Log.print(pixelColor, ""+pixelColor);
+            for(int i=0; i<scene.lightList.size();i++){
+                //Vec3 lightVec = intersection.interSectionPoint.sub(scene.lightList.get(i).getPosition());
+                Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersection.interSectionPoint);
+                lightVec = lightVec.normalize();
+                RgbColor lightColor = scene.lightList.get(i).getColor();
+
+                if (scene.shapeList.get(i).getMaterial().materialType.equals("Lambert")) {
+                    pixelColor = pixelColor.add(scene.shapeList.get(i).getMaterial().calculateLambert(lightVec, intersection.normal, lightColor));
+                    //Log.print(pixelColor, ""+pixelColor);
+                }
+            }
         }
 
 

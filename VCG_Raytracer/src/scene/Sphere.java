@@ -1,5 +1,6 @@
 package scene;
 
+import raytracer.Intersection;
 import utils.Material;
 import utils.RgbColor;
 import utils.Vec3;
@@ -7,10 +8,9 @@ import raytracer.Ray;
 public class Sphere extends Shape {
 
     private float radius;
-    private RgbColor color = new RgbColor(1, 0f, 0f);
 
     public Sphere(Vec3 position, float radius, Material material){
-        super(position, material);
+        super(position, material, "Sphere");
         this.radius = radius;
     }
 
@@ -44,8 +44,5 @@ public class Sphere extends Shape {
             }
         }
     }
-
-    public RgbColor getColor(){
-        return this.color;
-    }
 }
+

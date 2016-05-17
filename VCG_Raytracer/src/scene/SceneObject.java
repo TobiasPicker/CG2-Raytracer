@@ -8,4 +8,8 @@ public class SceneObject {
     public SceneObject(Vec3 position){
         this.position = position;
     }
+
+    public Vec3 getPosition() {
+        return position;
+    }
 }
