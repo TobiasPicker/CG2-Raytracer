@@ -26,7 +26,7 @@
         <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
+              <caret line="65" column="30" selection-start-line="65" selection-start-column="30" selection-end-line="65" selection-end-column="30" />
               <folding />
             </state>
           </provider>
@@ -49,8 +49,13 @@
         <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/Material.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="22" />
-              <folding />
+              <caret line="22" column="65" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
+              <folding>
+                <element signature="e#324#325#0" expanded="true" />
+                <element signature="e#354#355#0" expanded="true" />
+                <element signature="e#454#455#0" expanded="true" />
+                <element signature="e#484#485#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -65,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Intersection.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Intersection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Intersection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7876448">
-              <caret line="36" column="43" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -93,10 +98,9 @@
         <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/Phong.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+              <caret line="20" column="83" selection-start-line="20" selection-start-column="83" selection-end-line="20" selection-end-column="83" />
               <folding>
-                <element signature="e#182#183#0" expanded="true" />
-                <element signature="e#219#220#0" expanded="true" />
+                <element signature="docComment;class#Phong#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -106,10 +110,8 @@
         <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/scene/AmbientLight.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="21" />
+              <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
-                <element signature="e#177#178#0" expanded="true" />
-                <element signature="e#211#212#0" expanded="true" />
                 <element signature="e#245#246#0" expanded="true" />
                 <element signature="e#273#274#0" expanded="true" />
               </folding>
@@ -117,11 +119,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Raytracer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Raytracer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Raytracer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="74" column="117" selection-start-line="74" selection-start-column="117" selection-end-line="74" selection-end-column="117" />
+            <state vertical-scroll-proportion="0.7940798">
+              <caret line="88" column="103" selection-start-line="88" selection-start-column="103" selection-end-line="88" selection-end-column="103" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -180,10 +182,10 @@
         <option value="$PROJECT_DIR$/VCG_Raytracer/src/utils/Lambert.java" />
         <option value="$PROJECT_DIR$/VCG_Raytracer/src/scene/Scene.java" />
         <option value="$PROJECT_DIR$/VCG_Raytracer/src/scene/AmbientLight.java" />
-        <option value="$PROJECT_DIR$/VCG_Raytracer/src/utils/Material.java" />
-        <option value="$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Raytracer.java" />
         <option value="$PROJECT_DIR$/VCG_Raytracer/src/utils/Phong.java" />
+        <option value="$PROJECT_DIR$/VCG_Raytracer/src/utils/Material.java" />
         <option value="$PROJECT_DIR$/VCG_Raytracer/src/Main.java" />
+        <option value="$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Raytracer.java" />
       </list>
     </option>
   </component>
@@ -218,7 +220,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -307,8 +311,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -683,8 +685,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
           <folding>
-            <element signature="e#733#734#0" expanded="true" />
-            <element signature="e#827#828#0" expanded="true" />
+            <element signature="e#1084#1085#0" expanded="true" />
+            <element signature="e#1170#1171#0" expanded="true" />
             <element signature="method#cross#0;class#Vec3#0" expanded="false" />
           </folding>
         </state>
@@ -767,8 +769,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
           <folding>
-            <element signature="e#733#734#0" expanded="true" />
-            <element signature="e#827#828#0" expanded="true" />
+            <element signature="e#1084#1085#0" expanded="true" />
+            <element signature="e#1170#1171#0" expanded="true" />
             <element signature="method#cross#0;class#Vec3#0" expanded="false" />
           </folding>
         </state>
@@ -1021,16 +1023,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/Lambert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="14" column="84" selection-start-line="14" selection-start-column="84" selection-end-line="14" selection-end-column="84" />
-          <folding>
-            <element signature="docComment;class#Lambert#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/scene/Scene.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1054,6 +1046,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Intersection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="27" selection-start-line="23" selection-start-column="27" selection-end-line="23" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/Lambert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="14" column="84" selection-start-line="14" selection-start-column="84" selection-end-line="14" selection-end-column="84" />
+          <folding>
+            <element signature="docComment;class#Lambert#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/RgbColor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1065,22 +1077,10 @@
     <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/scene/AmbientLight.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="8" selection-start-line="16" selection-start-column="8" selection-end-line="16" selection-end-column="21" />
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="e#177#178#0" expanded="true" />
-            <element signature="e#211#212#0" expanded="true" />
             <element signature="e#245#246#0" expanded="true" />
             <element signature="e#273#274#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Raytracer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="74" column="117" selection-start-line="74" selection-start-column="117" selection-end-line="74" selection-end-column="117" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1088,18 +1088,12 @@
     <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/Material.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="15" selection-start-line="19" selection-start-column="15" selection-end-line="19" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/Phong.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <caret line="22" column="65" selection-start-line="22" selection-start-column="65" selection-end-line="22" selection-end-column="65" />
           <folding>
-            <element signature="e#182#183#0" expanded="true" />
-            <element signature="e#219#220#0" expanded="true" />
+            <element signature="e#324#325#0" expanded="true" />
+            <element signature="e#354#355#0" expanded="true" />
+            <element signature="e#454#455#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1107,15 +1101,25 @@
     <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="77" column="40" selection-start-line="77" selection-start-column="40" selection-end-line="77" selection-end-column="40" />
+          <caret line="65" column="30" selection-start-line="65" selection-start-column="30" selection-end-line="65" selection-end-column="30" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Intersection.java">
+    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/utils/Phong.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7876448">
-          <caret line="36" column="43" selection-start-line="36" selection-start-column="43" selection-end-line="36" selection-end-column="43" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="20" column="83" selection-start-line="20" selection-start-column="83" selection-end-line="20" selection-end-column="83" />
+          <folding>
+            <element signature="docComment;class#Phong#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/VCG_Raytracer/src/raytracer/Raytracer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7940798">
+          <caret line="88" column="103" selection-start-line="88" selection-start-column="103" selection-end-line="88" selection-end-column="103" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

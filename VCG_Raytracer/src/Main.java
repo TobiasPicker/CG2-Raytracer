@@ -27,10 +27,7 @@ import scene.Scene;
 import scene.Sphere;
 import ui.Window;
 import raytracer.Raytracer;
-import utils.Lambert;
-import utils.Material;
-import utils.RgbColor;
-import utils.Vec3;
+import utils.*;
 
 // Main application class. This is the routine called by the JVM to run the program.
 public class Main {
@@ -57,7 +54,7 @@ public class Main {
     private static void setupScene(){
         setupCamera();
         setupLights();
-        scene.createSphere(new Vec3(0,0,-5), 1f, new Lambert(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
+        scene.createSphere(new Vec3(0,0,-5), 1f, new Phong(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f),new RgbColor(.25f,.5f,.7f),5));
         //scene.createSphere(new Vec3(0,0,-5), .1f, new Material(new RgbColor(0,1,0)));
     }
 

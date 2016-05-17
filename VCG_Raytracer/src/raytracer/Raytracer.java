@@ -17,8 +17,6 @@
 package raytracer;
 
 import scene.Scene;
-import scene.Shape;
-import scene.Sphere;
 import ui.Window;
 import utils.*;
 import java.awt.image.BufferedImage;
@@ -73,9 +71,11 @@ public class Raytracer {
         else {
             Intersection intersection = new Intersection(primaryRay, (float)distance, scene.shapeList.get(index));
             pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
-            Log.print(pixelColor, ""+pixelColor);
+
+            //Log.print(pixelColor, ""+pixelColor);
+
             for(int i=0; i<scene.lightList.size();i++){
-                //Vec3 lightVec = intersection.interSectionPoint.sub(scene.lightList.get(i).getPosition());
+
                 Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersection.interSectionPoint);
                 lightVec = lightVec.normalize();
                 RgbColor lightColor = scene.lightList.get(i).getColor();
@@ -84,9 +84,14 @@ public class Raytracer {
                     pixelColor = pixelColor.add(scene.shapeList.get(i).getMaterial().calculateLambert(lightVec, intersection.normal, lightColor));
                     //Log.print(pixelColor, ""+pixelColor);
                 }
+                else if(scene.shapeList.get(i).getMaterial().materialType.equals("Phong")){
+
+                    Vec3 viewVec = scene.getCamera().getPosition().sub(intersection.interSectionPoint);
+                    viewVec = viewVec.normalize();
+                    pixelColor = pixelColor.add(scene.shapeList.get(i).getMaterial().calculatePhong(lightVec, intersection.normal, lightColor, viewVec));
+                }
             }
         }
-
 
         return pixelColor;
     }

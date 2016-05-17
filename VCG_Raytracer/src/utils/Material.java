@@ -16,6 +16,10 @@ public class Material {
         return ambient;
     }
 
+    public RgbColor calculatePhong(Vec3 lightVec, Vec3 normal, RgbColor lightColor, Vec3 viewVec){
+        return ambient;
+    }
+
     public RgbColor calculateAmbient(RgbColor ambientLightColor){
         return ambient.multRGB(ambientLightColor);}
 }
