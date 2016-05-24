@@ -20,6 +20,10 @@ public class Scene {
         shapeList.add(new Sphere(position, radius, material));
     }
 
+    public static void createPlane(Vec3 position, Vec3 normal, Material material){
+        shapeList.add(new Plane(position, normal, material));
+    }
+
     //adds a light to lightList
     public static void createLight(Vec3 position, RgbColor color, String lightType){
         if(lightType.equals("PointLight")) {
@@ -35,7 +39,10 @@ public class Scene {
         camera = new Camera(position, userUp, centerOfInterest, viewAngle, focalLength);
     }
 
-    public static AmbientLight getAmbientLight(){return ambientLight;}
+    public static AmbientLight getAmbientLight(){
+        return ambientLight;
+    }
+
     public static Camera getCamera(){
         return camera;
     }

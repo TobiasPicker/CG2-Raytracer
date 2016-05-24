@@ -11,7 +11,6 @@ public class Lambert extends Material {
 
     public RgbColor calculateLambert(Vec3 lightVec, Vec3 normal, RgbColor lightColor){
         RgbColor lambert = lightColor.multRGB(diffuse.multScalar(normal.scalar(lightVec)));
-        //Log.print(lambert, ""+lambert);
         return lambert;
     }
 }

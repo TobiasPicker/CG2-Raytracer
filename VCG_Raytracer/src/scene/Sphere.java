@@ -4,6 +4,7 @@ import raytracer.Intersection;
 import utils.Material;
 import utils.Vec3;
 import raytracer.Ray;
+
 public class Sphere extends Shape {
 
     private float radius;

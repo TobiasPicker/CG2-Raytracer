@@ -53,8 +53,9 @@ public class Main {
     private static void setupScene(){
         setupCamera();
         setupLights();
-        scene.createSphere(new Vec3(0,0,-5), 1f, new Phong(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f),new RgbColor(.25f,.5f,.7f),5));
+        //scene.createSphere(new Vec3(0,0,-5), 1f, new Phong(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f),new RgbColor(.25f,.5f,.7f),5));
         //scene.createSphere(new Vec3(0,0,-5), .1f, new Material(new RgbColor(0,1,0)));
+        scene.createPlane(new Vec3(0, -5, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
     }
 
     //specifying the parameters of the camera and adding the camera object to scene

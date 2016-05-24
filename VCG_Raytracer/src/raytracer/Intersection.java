@@ -1,17 +1,18 @@
 package raytracer;
 
 import scene.Shape;
+import utils.Log;
 import utils.Vec3;
 
 public class Intersection {
 
-    Vec3 interSectionPoint;
-    Vec3 normal;
-    Ray inRay;
-    Ray outRay;
-    Shape shape;
-    float distance;
-    boolean hit;
+    private Vec3 interSectionPoint;
+    private Vec3 normal;
+    private Ray inRay;
+    private Ray outRay;
+    private Shape shape;
+    private float distance;
+    private boolean hit;
 
     public Intersection(Ray inRay,float distance, Shape shape, boolean hit){
         this.distance = distance;
@@ -34,11 +35,21 @@ public class Intersection {
         if(shape.objectType.equals("Sphere")){
             normal = interSectionPoint.sub(shape.getPosition());
             normal = normal.normalize();
+        }else if(shape.objectType.equals("Plane")){
+            normal = shape.getNormal();
         }
     }
 
     public float getDistance(){
         return distance;
+    }
+
+    public Vec3 getInterSectionPoint(){
+        return interSectionPoint;
+    }
+
+    public Vec3 getNormal() {
+        return normal;
     }
 
     public boolean isHit() {
