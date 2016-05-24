@@ -33,8 +33,6 @@ public class Raytracer {
         this.scene = scene;
     }
 
-
-
     public void renderScene() {
         for (int y = 0; y < 600; y++) {
             for (int x = 0; x < 800; x++) {
@@ -54,22 +52,22 @@ public class Raytracer {
 
         for(int i=0; i<scene.shapeList.size();i++) {
             if(i==0){
-                distance = scene.shapeList.get(i).intersect(primaryRay);
+                distance = scene.shapeList.get(i).intersect(primaryRay).getDistance();
             }else{
-                if(scene.shapeList.get(i).intersect(primaryRay)<distance){
-                    distance = scene.shapeList.get(i).intersect(primaryRay);
+                if(scene.shapeList.get(i).intersect(primaryRay).getDistance()<distance){
+                    distance = scene.shapeList.get(i).intersect(primaryRay).getDistance();
                     index = i;
                 }
             }
         }
 
         //ray does not hit --> set backgroundColor
-        if (scene.shapeList.get(index).intersect(primaryRay) == 0) {
+        if (!scene.shapeList.get(index).intersect(primaryRay).isHit()) {
             pixelColor = new RgbColor(0f, 0f, 0f);
         }
         //ray does hit --> set sphereColor
         else {
-            Intersection intersection = new Intersection(primaryRay, (float)distance, scene.shapeList.get(index));
+            Intersection intersection = scene.shapeList.get(index).intersect(primaryRay);
             pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
 
             //Log.print(pixelColor, ""+pixelColor);
@@ -80,15 +78,15 @@ public class Raytracer {
                 lightVec = lightVec.normalize();
                 RgbColor lightColor = scene.lightList.get(i).getColor();
 
-                if (scene.shapeList.get(index).getMaterial().materialType.equals("Lambert")) {
-                    pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateLambert(lightVec, intersection.normal, lightColor));
+                if (scene.shapeList.get(i).getMaterial().materialType.equals("Lambert")) {
+                    pixelColor = pixelColor.add(scene.shapeList.get(i).getMaterial().calculateLambert(lightVec, intersection.normal, lightColor));
                     //Log.print(pixelColor, ""+pixelColor);
                 }
-                else if(scene.shapeList.get(index).getMaterial().materialType.equals("Phong")){
+                else if(scene.shapeList.get(i).getMaterial().materialType.equals("Phong")){
 
                     Vec3 viewVec = scene.getCamera().getPosition().sub(intersection.interSectionPoint);
                     viewVec = viewVec.normalize();
-                    pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculatePhong(lightVec, intersection.normal, lightColor, viewVec));
+                    pixelColor = pixelColor.add(scene.shapeList.get(i).getMaterial().calculatePhong(lightVec, intersection.normal, lightColor, viewVec));
                 }
             }
         }

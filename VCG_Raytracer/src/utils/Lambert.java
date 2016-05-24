@@ -1,8 +1,5 @@
 package utils;
 
-/**
-        * Created by PraktikumCG on 17.05.2016.
-        */
 public class Lambert extends Material {
 
     RgbColor diffuse;

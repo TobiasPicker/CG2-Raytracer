@@ -18,7 +18,6 @@ public class Ray{
     public Vec3 getDirection(){
         direction = destinationPoint.sub(pOrigin);
         direction = direction.normalize();
-        //direction = new Vec3(direction.x/direction.length(),direction.y/direction.length(),direction.z/direction.length());
         return direction;
     }
 

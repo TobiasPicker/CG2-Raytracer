@@ -5,8 +5,6 @@ public class Material {
     public String materialType;
     RgbColor ambient;
 
-
-
     public Material(RgbColor ambient, String materialType){
         this.ambient = ambient;
         this.materialType = materialType;

@@ -2,9 +2,6 @@ package scene;
 
 import utils.RgbColor;
 
-/**
- * Created by PraktikumCG on 17.05.2016.
- */
 public class AmbientLight{
 
     RgbColor color;

@@ -1,6 +1,5 @@
 package utils;
 
-
 public class Log {
     public static void print(Object classObj, String message){
         System.out.println((char)27 +  "[36m" + String.valueOf("VCG Raytracer >> " + classObj.getClass().getSimpleName()) + " :: " + message);
