@@ -15,13 +15,14 @@ public class Sphere extends Shape {
     public Sphere(Vec3 position, float radius, Material material){
         super(position, material, "Sphere");
         this.radius = radius;
-        this.pointMatrix = pointMatrix.scale(radius);
+        this.pointMatrix = pointMatrix.scale(new Vec3(radius,radius,radius));
         this.inversePointMatrix = pointMatrix.invert();
         //Log.print(this, ""+pointMatrix);
     }
 
     public  Intersection intersect(Ray ray){
 
+        //Log.print(this, "ray origin vor trafo: "+ray.getpOrigin());
         //beamen///////////////////
         ray.setpOrigin(inversePointMatrix.multVec3(ray.getpOrigin(), true));
         ray.setDirection(inversePointMatrix.multVec3(ray.getDirection(), false));
@@ -58,11 +59,11 @@ public class Sphere extends Shape {
                 //Log.print(this, ""+intersectionPoint);
                 //Log.print(this, ""+pointMatrix);
                 //Log.print(this, ray.getDirection()+", "+ray.getpOrigin()+", "+t);
-                Vec3 normal = new Vec3();
-                //Vec3 intersectionPoint = new Vec3(50, 50, 50);
+                Vec3 normal = intersectionPoint.sub(this.position);
+                normal = normal.normalize();
                 /////////////////////////////////
 
-                Log.print(this, "ray origin: "+ray.getpOrigin());
+                //Log.print(this, "ray origin nach trafo: "+ray.getpOrigin());
                 return new Intersection(ray, intersectionPoint, normal, this, true);
             } else {
                 return new Intersection(false);

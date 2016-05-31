@@ -36,7 +36,7 @@ public class Raytracer {
     public void renderScene() {
         for (int y = 0; y < 600; y++) {
             for (int x = 0; x < 800; x++) {
-                Log.print(this,"1. " + x+"; "+y);
+                //Log.print(this,"1. " + x+"; "+y);
                 mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x, y), new Vec2(x, y));
 
             }
@@ -52,14 +52,15 @@ public class Raytracer {
         double distance=0;
         int index = 0;
 
+        Intersection intersection = new Intersection(false);
 
         for(int i=0; i<scene.shapeList.size();i++) {
             if(i==0){
-                distance = scene.shapeList.get(i).intersect(primaryRay).getDistance();
+                intersection = scene.shapeList.get(i).intersect(primaryRay);
             }else{
-                if(scene.shapeList.get(i).intersect(primaryRay).getDistance()<distance){
-                    distance = scene.shapeList.get(i).intersect(primaryRay).getDistance();
-                    index = i;
+                Intersection intersectionTemp = scene.shapeList.get(i).intersect(primaryRay);
+                if(intersectionTemp.getDistance()<intersection.getDistance()){
+                    intersection = intersectionTemp;
                 }
             }
         }
@@ -67,24 +68,24 @@ public class Raytracer {
         //Log.print(this, ""+scene.shapeList.get(index).intersect(primaryRay).isHit());
 
         //ray does not hit --> set backgroundColor
-        if (!scene.shapeList.get(index).intersect(primaryRay).isHit()) {
+        if (!intersection.isHit()) {
 
-            pixelColor = new RgbColor(1f, 0f, 0f);
+            pixelColor = new RgbColor(.1f, .5f, 0f);
 
             //Log.print(this, ""+scene.shapeList.get(index).intersect(primaryRay).isHit());
-            Log.print(this, "ray does not hit");
+            //Log.print(this, "ray does not hit");
 
         }
         //ray does hit --> set sphereColor
         else {
-            Log.print(this, "ray hits");
-            Intersection intersection = scene.shapeList.get(index).intersect(primaryRay);
+            //Log.print(this, "ray hits");
             pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
 
             for(int i=0; i<scene.lightList.size();i++){
 
+                Vec3 intersectionPoint = intersection.getInterSectionPoint();
                 //Log.print(this, "Shape: "+scene.shapeList.get(index) +"; Light: "+scene.lightList.get(i) +"; IntersectionPoint: "+intersection.getInterSectionPoint() +"; IntersectionShape: "+intersection.getShape()+"; IntersectionRay: "+intersection.getInRay());
-                Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersection.getInterSectionPoint());
+                Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersectionPoint);
                 lightVec = lightVec.normalize();
                 RgbColor lightColor = scene.lightList.get(i).getColor();
 
@@ -93,7 +94,7 @@ public class Raytracer {
                 }
                 else if(scene.shapeList.get(index).getMaterial().materialType.equals("Phong")){
 
-                    Vec3 viewVec = scene.getCamera().getPosition().sub(intersection.getInterSectionPoint());
+                    Vec3 viewVec = scene.getCamera().getPosition().sub(intersectionPoint);
                     viewVec = viewVec.normalize();
                     pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculatePhong(lightVec, intersection.getNormal(), lightColor, viewVec));
                 }

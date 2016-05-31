@@ -19,7 +19,7 @@ public class Shape extends SceneObject {
         super(position);
         pointMatrix = new Matrix4().translate(position);
         normalMatrix = pointMatrix.invert().transpose();
-        Log.print(this, ""+normalMatrix);
+        //Log.print(this, ""+normalMatrix);
         this.material = material;
         this.objectType = objectType;
     }
