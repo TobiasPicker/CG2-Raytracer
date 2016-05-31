@@ -17,6 +17,7 @@
 package raytracer;
 
 import scene.Scene;
+import scene.Shape;
 import ui.Window;
 import utils.*;
 import java.awt.image.BufferedImage;
@@ -38,7 +39,6 @@ public class Raytracer {
             for (int x = 0; x < 800; x++) {
                 //Log.print(this,"1. " + x+"; "+y);
                 mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x, y), new Vec2(x, y));
-
             }
         }
 
@@ -47,22 +47,27 @@ public class Raytracer {
 
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
-        Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y), 100);
+        Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y), 1000000);
         RgbColor pixelColor = new RgbColor(.1f,.1f,.1f);
-        double distance=0;
-        int index = 0;
 
         Intersection intersection = new Intersection(false);
 
         for(int i=0; i<scene.shapeList.size();i++) {
             if(i==0){
                 intersection = scene.shapeList.get(i).intersect(primaryRay);
+                //Log.print(this, "isHit: "+ scene.shapeList.get(i).intersect(primaryRay).isHit());
+                //Log.print(this, "erstes shape: "+scene.shapeList.get(i));
+                //Log.print(this, "" + intersection.getDistance());
             }else{
                 Intersection intersectionTemp = scene.shapeList.get(i).intersect(primaryRay);
-                if(intersectionTemp.getDistance()<intersection.getDistance()){
-                    intersection = intersectionTemp;
-                }
+                //if(intersectionTemp.getDistance()>0){
+                    if(intersectionTemp.getDistance()<intersection.getDistance()){
+                        intersection = intersectionTemp;
+                        //Log.print(this, "vorderstes shape: "+scene.shapeList.get(i));
+                    }
+                //}
             }
+            //Log.print(this, "shape: "+scene.shapeList.get(i));
         }
 
         //Log.print(this, ""+scene.shapeList.get(index).intersect(primaryRay).isHit());
@@ -70,7 +75,7 @@ public class Raytracer {
         //ray does not hit --> set backgroundColor
         if (!intersection.isHit()) {
 
-            pixelColor = new RgbColor(.1f, .5f, 0f);
+            pixelColor = new RgbColor(0f, .5f, 0f);
 
             //Log.print(this, ""+scene.shapeList.get(index).intersect(primaryRay).isHit());
             //Log.print(this, "ray does not hit");
@@ -78,25 +83,25 @@ public class Raytracer {
         }
         //ray does hit --> set sphereColor
         else {
+            Shape frontShape = intersection.getShape();
             //Log.print(this, "ray hits");
-            pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
+            pixelColor = pixelColor.add(frontShape.getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
 
             for(int i=0; i<scene.lightList.size();i++){
 
                 Vec3 intersectionPoint = intersection.getInterSectionPoint();
-                //Log.print(this, "Shape: "+scene.shapeList.get(index) +"; Light: "+scene.lightList.get(i) +"; IntersectionPoint: "+intersection.getInterSectionPoint() +"; IntersectionShape: "+intersection.getShape()+"; IntersectionRay: "+intersection.getInRay());
                 Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersectionPoint);
                 lightVec = lightVec.normalize();
                 RgbColor lightColor = scene.lightList.get(i).getColor();
 
-                if (scene.shapeList.get(index).getMaterial().materialType.equals("Lambert")) {
-                    pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateLambert(lightVec, intersection.getNormal(), lightColor));
+                if (frontShape.getMaterial().materialType.equals("Lambert")) {
+                    pixelColor = pixelColor.add(frontShape.getMaterial().calculateLambert(lightVec, intersection.getNormal(), lightColor));
                 }
-                else if(scene.shapeList.get(index).getMaterial().materialType.equals("Phong")){
+                else if(frontShape.getMaterial().materialType.equals("Phong")){
 
                     Vec3 viewVec = scene.getCamera().getPosition().sub(intersectionPoint);
                     viewVec = viewVec.normalize();
-                    pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculatePhong(lightVec, intersection.getNormal(), lightColor, viewVec));
+                    pixelColor = pixelColor.add(frontShape.getMaterial().calculatePhong(lightVec, intersection.getNormal(), lightColor, viewVec));
                 }
             }
         }

@@ -15,10 +15,11 @@ public class Shape extends SceneObject {
     protected Matrix4 pointMatrix;
     protected Matrix4 normalMatrix;
 
+
     public Shape(Vec3 position, Material material, String objectType){
         super(position);
-        pointMatrix = new Matrix4().translate(position);
-        normalMatrix = pointMatrix.invert().transpose();
+        this.pointMatrix = new Matrix4().translate(position);
+        this.normalMatrix = pointMatrix.invert().transpose();
         //Log.print(this, ""+normalMatrix);
         this.material = material;
         this.objectType = objectType;

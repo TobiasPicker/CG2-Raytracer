@@ -54,9 +54,10 @@ public class Main {
     private static void setupScene(Scene scene){
         setupCamera(scene);
         setupLights(scene);
-        scene.createSphere(new Vec3(2,0,-5), 1f, new Phong(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f),new RgbColor(.25f,.5f,.7f),5));
-        //scene.createSphere(new Vec3(-2,3,-10), 3f, new Phong(new RgbColor(0,.3f,.4f),new RgbColor(.5f,.7f,.25f),new RgbColor(.5f,.7f,.25f),5));
-        scene.createPlane(new Vec3(0, -5, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
+
+        scene.createSphere(new Vec3(3, 0, 0), 1f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(1f,0,0),new RgbColor(.5f,.7f,.25f),5));
+        scene.createPlane(new Vec3(0, -5, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(1f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
+        scene.createSphere(new Vec3(-2, 0, 0), 1f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(0,0,1f),new RgbColor(.25f,.5f,.7f),5));
     }
 
     //specifying the parameters of the camera and adding the camera object to scene
@@ -74,7 +75,7 @@ public class Main {
     private static void setupLights(Scene scene){
 
         scene.createLight(new Vec3(8,5,5f), new RgbColor(0.75f,0.75f,0.75f), "PointLight");
-        scene.createAmbientLight(new RgbColor(.25f,.25f,.25f));
+        scene.createAmbientLight(new RgbColor(.1f,.1f,.1f));
     }
 
     //added an object camera in draw and raytraceScene so the direction of a ray could be calculated in class Raytracer

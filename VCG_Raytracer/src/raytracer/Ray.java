@@ -26,11 +26,15 @@ public class Ray{
     }
 
     public void setDirection(Vec3 direction) {
-        this.direction = direction;
+        this.direction = direction.normalize();
     }
 
     public void setpOrigin(Vec3 pOrigin) {
         this.pOrigin = pOrigin;
+    }
+
+    public float getLength() {
+        return length;
     }
 }
 

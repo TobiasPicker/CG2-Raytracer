@@ -11,7 +11,7 @@ public class Intersection {
     private Ray inRay;
     private Ray outRay;
     private Shape shape;
-    private float distance;
+    private float distance = 1000000;
     private boolean hit;
 
     public Intersection(Ray inRay,float distance, Shape shape, boolean hit){
@@ -25,10 +25,13 @@ public class Intersection {
 
     public Intersection(boolean hit){
         this.hit = hit;
+        //Log.print(this, "ray does not hit: "+ this.distance);
     }
 
-    public Intersection(Ray inRay, Vec3 interSectionPoint,Vec3 normal, Shape shape, boolean hit){
+    public Intersection(Ray inRay,float distance, Vec3 interSectionPoint,Vec3 normal, Shape shape, boolean hit){
         this.inRay = inRay;
+        this.distance = distance;
+        //Log.print(this, "ray does hit: "+ distance);
         this.interSectionPoint = interSectionPoint;
         //Log.print(this, "IntersectionPoint erstellt");
         this.normal = normal;
