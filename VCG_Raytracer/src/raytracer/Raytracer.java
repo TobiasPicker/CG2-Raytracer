@@ -36,7 +36,9 @@ public class Raytracer {
     public void renderScene() {
         for (int y = 0; y < 600; y++) {
             for (int x = 0; x < 800; x++) {
+                Log.print(this,"1. " + x+"; "+y);
                 mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x, y), new Vec2(x, y));
+
             }
         }
 
@@ -45,10 +47,11 @@ public class Raytracer {
 
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
-        Ray primaryRay = new Ray(Scene.getCamera().getPosition(), Scene.getCamera().calculateDestinationPoint(x, y), 100);
+        Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y), 100);
         RgbColor pixelColor = new RgbColor(.1f,.1f,.1f);
         double distance=0;
         int index = 0;
+
 
         for(int i=0; i<scene.shapeList.size();i++) {
             if(i==0){
@@ -61,19 +64,26 @@ public class Raytracer {
             }
         }
 
+        //Log.print(this, ""+scene.shapeList.get(index).intersect(primaryRay).isHit());
+
         //ray does not hit --> set backgroundColor
         if (!scene.shapeList.get(index).intersect(primaryRay).isHit()) {
-            pixelColor = new RgbColor(0f, 0f, 0f);
+
+            pixelColor = new RgbColor(1f, 0f, 0f);
+
+            //Log.print(this, ""+scene.shapeList.get(index).intersect(primaryRay).isHit());
+            Log.print(this, "ray does not hit");
+
         }
         //ray does hit --> set sphereColor
         else {
+            Log.print(this, "ray hits");
             Intersection intersection = scene.shapeList.get(index).intersect(primaryRay);
             pixelColor = pixelColor.add(scene.shapeList.get(index).getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
 
-            //Log.print(pixelColor, ""+pixelColor);
-
             for(int i=0; i<scene.lightList.size();i++){
 
+                //Log.print(this, "Shape: "+scene.shapeList.get(index) +"; Light: "+scene.lightList.get(i) +"; IntersectionPoint: "+intersection.getInterSectionPoint() +"; IntersectionShape: "+intersection.getShape()+"; IntersectionRay: "+intersection.getInRay());
                 Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersection.getInterSectionPoint());
                 lightVec = lightVec.normalize();
                 RgbColor lightColor = scene.lightList.get(i).getColor();

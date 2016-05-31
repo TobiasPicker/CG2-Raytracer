@@ -27,6 +27,15 @@ public class Intersection {
         this.hit = hit;
     }
 
+    public Intersection(Ray inRay, Vec3 interSectionPoint,Vec3 normal, Shape shape, boolean hit){
+        this.inRay = inRay;
+        this.interSectionPoint = interSectionPoint;
+        Log.print(this, "IntersectionPoint erstellt");
+        this.normal = normal;
+        this.shape = shape;
+        this.hit = hit;
+    }
+
     private void calculateIntersectionPoint(){
         this.interSectionPoint = inRay.getpOrigin().add(inRay.getDirection().multScalar(distance));
     }
@@ -45,6 +54,7 @@ public class Intersection {
     }
 
     public Vec3 getInterSectionPoint(){
+        Log.print(this, "Intersectionpoint wird geholt "+interSectionPoint);
         return interSectionPoint;
     }
 
@@ -52,7 +62,15 @@ public class Intersection {
         return normal;
     }
 
+    public Shape getShape() {
+        return shape;
+    }
+
     public boolean isHit() {
         return hit;
+    }
+
+    public Ray getInRay() {
+        return inRay;
     }
 }

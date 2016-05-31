@@ -24,4 +24,14 @@ public class Ray{
     public Vec3 getpOrigin(){
         return pOrigin;
     }
+
+    public void setDirection(Vec3 direction) {
+        this.direction = direction;
+    }
+
+    public void setpOrigin(Vec3 pOrigin) {
+        this.pOrigin = pOrigin;
+    }
 }
+
+

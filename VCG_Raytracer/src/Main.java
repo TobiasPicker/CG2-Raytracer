@@ -34,7 +34,6 @@ public class Main {
     static int IMAGE_WIDTH = 800;
     static int IMAGE_HEIGHT = 600;
 
-    static Scene scene;
 
     // Initial method. This is where the show begins.
     public static void main(String[] args){
@@ -42,7 +41,9 @@ public class Main {
 
         Window renderWindow = new Window(IMAGE_WIDTH, IMAGE_HEIGHT);
 
-        setupScene();
+        Scene scene = new Scene();
+
+        setupScene(scene);
 
         draw(renderWindow, scene);
 
@@ -50,16 +51,16 @@ public class Main {
     }
 
     //builds the scene
-    private static void setupScene(){
-        setupCamera();
-        setupLights();
-        //scene.createSphere(new Vec3(0,0,-5), 1f, new Phong(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f),new RgbColor(.25f,.5f,.7f),5));
+    private static void setupScene(Scene scene){
+        setupCamera(scene);
+        setupLights(scene);
+        scene.createSphere(new Vec3(0,0,-5), 1f, new Phong(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f),new RgbColor(.25f,.5f,.7f),5));
         //scene.createSphere(new Vec3(0,0,-5), .1f, new Material(new RgbColor(0,1,0)));
-        scene.createPlane(new Vec3(0, -5, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
+        //scene.createPlane(new Vec3(0, -5, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(0f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
     }
 
     //specifying the parameters of the camera and adding the camera object to scene
-    private static void setupCamera(){
+    private static void setupCamera(Scene scene){
         Vec3 position = new Vec3(0,0,5);
         Vec3 userUp = new Vec3(0,1,0);
         Vec3 centerOfInterest = new Vec3(0,0,0);
@@ -70,7 +71,7 @@ public class Main {
     }
 
     //specifying the parameters of the lights and adding the light objects to scene.lightList
-    private static void setupLights(){
+    private static void setupLights(Scene scene){
 
         scene.createLight(new Vec3(8,5,5f), new RgbColor(0.75f,0.75f,0.75f), "PointLight");
         scene.createAmbientLight(new RgbColor(.25f,.25f,.25f));
