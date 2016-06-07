@@ -17,7 +17,7 @@ public class Sphere extends Shape {
         this.radius = radius;
         this.pointMatrix = pointMatrix.scale(new Vec3(radius,radius,radius));
         this.inversePointMatrix = pointMatrix.invert();
-       Log.print(this, ""+pointMatrix);
+        //Log.print(this, ""+pointMatrix);
     }
 
     public  Intersection intersect(Ray ray){
@@ -26,8 +26,16 @@ public class Sphere extends Shape {
         Vec3 localDirection = inversePointMatrix.multVec3(ray.getDirection(), false);
 
         Ray tempRay = new Ray(localOrigin,localDirection, 1000000);
+
+        /*
+        Log.print(this, "pOrigin: " + tempRay.getpOrigin());
+        Log.print(this, "destinationPoint: " + tempRay.getDestinationPoint());
+        Log.print(this, "direction: " + tempRay.getDirection());
+        Log.print(this, "length: " + tempRay.getLength());
+        */
+
         //Log.print(this, ""+inversePointMatrix);
-        //Log.print(this, "ray origin vor trafo: "+ray.getpOrigin());
+        //Log.print(this, "tempRay origin: "+tempRay.getpOrigin());
 
         //calculation of intersection between ray and sphere
         float b = 2*(tempRay.getpOrigin().scalar(tempRay.getDirection()));
@@ -50,6 +58,13 @@ public class Sphere extends Shape {
                 t = t1;
             }
 
+            Log.print(this, "b: "+ b);
+            Log.print(this, "c: "+ c);
+            Log.print(this, "discriminante: "+ discriminant);
+            Log.print(this, "t0: "+ t0);
+            Log.print(this, "t1: "+ t1);
+            Log.print(this, "t: "+ t);
+
             //Log.print(this, "T: "+t);
 
             if (t > 10E-9) {
@@ -58,9 +73,10 @@ public class Sphere extends Shape {
                 //Log.print(this, ""+intersectionPoint);
                 intersectionPoint = pointMatrix.multVec3(intersectionPoint, true);
                 //Log.print(this, ""+intersectionPoint);
-                Log.print(this, ""+pointMatrix);
+                //Log.print(this, ""+pointMatrix);
                 //Log.print(this, ray.getDirection()+", "+ray.getpOrigin()+", "+t);
                 Vec3 normal = intersectionPoint.sub(this.position);
+                normal = normal.multScalar(1f/radius);
                 //normal = normal.normalize();
                 //Log.print(this, ""+ normal);
                 /////////////////////////////////

@@ -55,18 +55,20 @@ public class Main {
         setupCamera(scene);
         setupLights(scene);
 
-        //scene.createSphere(new Vec3(2, 0, 0), 1f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(1f,0,0),new RgbColor(.5f,.7f,.25f),5));
-        scene.createPlane(new Vec3(0, -5, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(1f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
-        scene.createPlane(new Vec3(5, 0, 0), new Vec3(-1, 0, 0), new Lambert(new RgbColor(1f,.3f,.4f),new RgbColor(.25f,.5f,.7f)));
-        //scene.createSphere(new Vec3(-2, 0, 0), 1f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(0,0,1f),new RgbColor(.25f,.5f,.7f),5));
+        //scene.createPlane(new Vec3(0, -5f, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(1f,.3f,.4f),new RgbColor(.0f,.5f,.7f)));
+        //scene.createPlane(new Vec3(5, 0, 0), new Vec3(-1, 0, 0), new Lambert(new RgbColor(1f,.3f,.4f),new RgbColor(.0f,.5f,.7f)));
+        //rot
+        //scene.createSphere(new Vec3(-6, 0, 0), .4f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(1f,0,0),new RgbColor(.5f,.7f,.25f),5));
+        //blau
+        scene.createSphere(new Vec3(0, 0, 0), 1f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(0,0,1f),new RgbColor(.25f,.5f,.7f),5));
     }
 
     //specifying the parameters of the camera and adding the camera object to scene
     private static void setupCamera(Scene scene){
-        Vec3 position = new Vec3(0,0,20);
+        Vec3 position = new Vec3(0,0,10);
         Vec3 userUp = new Vec3(0,1,0);
-        Vec3 centerOfInterest = new Vec3(0,0,-1);
-        float viewAngle =  60f;
+        Vec3 centerOfInterest = new Vec3(0,0,5);
+        float viewAngle =90f;
         float focalLength = 5f;
 
         scene.createCamera(position,userUp,centerOfInterest,viewAngle,focalLength);

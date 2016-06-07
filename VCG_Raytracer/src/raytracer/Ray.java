@@ -29,6 +29,10 @@ public class Ray{
         this.direction = direction.normalize();
     }
 
+    public Vec3 getDestinationPoint() {
+        return destinationPoint;
+    }
+
     public void setpOrigin(Vec3 pOrigin) {
         this.pOrigin = pOrigin;
     }

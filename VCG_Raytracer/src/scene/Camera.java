@@ -1,5 +1,6 @@
 package scene;
 
+import utils.Log;
 import utils.Vec3;
 
 public class Camera extends SceneObject {
@@ -24,10 +25,11 @@ public class Camera extends SceneObject {
         this.centerOfInterest = centerOfInterest;
         this.viewAngle = viewAngle;
         this.focalLength = focalLength;
-        this.height = 2* (float)Math.tan( (viewAngle * (Math.PI / 360f)) / 2f);
+        this.height = 2* focalLength* (float)Math.tan( (viewAngle * (Math.PI /360f)));
         this.width  = 4f * height / 3f;
         calculateCamCoord();
         this.centerPoint = position.add(camViewVec.multScalar(focalLength));
+        //Log.print(this,"centerPoint: "+ centerPoint);
     }
 
     //calculation of cameracoordinationsystem
@@ -44,6 +46,16 @@ public class Camera extends SceneObject {
 
         widthVec = camSideVec.multScalar(0.5f*width);
         heightVec = camUpVec.multScalar(0.5f*height);
+
+        /*
+        Log.print(this,"Breite: "+ width);
+        Log.print(this,"Höhe: "+ height);
+        Log.print(this,"upVec: "+ camUpVec);
+        Log.print(this,"sideVec: "+ camSideVec);
+        Log.print(this,"viewVec: "+ camViewVec);
+        Log.print(this,"Richtung in Breite: "+ widthVec);
+        Log.print(this,"Richtung in Höhe: "+ heightVec);
+        */
     }
 
     public Vec3 calculateDestinationPoint(int x, int y){
@@ -53,9 +65,12 @@ public class Camera extends SceneObject {
         xNorm = 2*((x + 0.5f)/800)-1;
         yNorm = 2*((y + 0.5f)/600)-1;
 
-        Vec3 destinationPoint = centerPoint.add(widthVec.multScalar(xNorm));
-        destinationPoint = destinationPoint.add(heightVec.multScalar(yNorm));
+        Vec3 destinationPoint = centerPoint.add(widthVec.multScalar(xNorm)).add(heightVec.multScalar(yNorm));
+        //destinationPoint = destinationPoint.add(heightVec.multScalar(yNorm));
         destinationPoint.y = -destinationPoint.y;
+        //if(x==400&&y==300) {
+        //    Log.print(this, "destpoint: " + destinationPoint);
+        //}
         return destinationPoint;
     }
 

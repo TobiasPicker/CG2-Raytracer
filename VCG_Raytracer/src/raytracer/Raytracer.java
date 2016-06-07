@@ -36,8 +36,8 @@ public class Raytracer {
     }
 
     public void renderScene() {
-        for (int y = 0; y < 600; y++) {
-            for (int x = 0; x < 800; x++) {
+        for (int y = 300; y < 301; y++) {
+            for (int x = 400; x < 401; x++) {
                 //Log.print(this,"1. " + x+"; "+y);
                 mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x, y), new Vec2(x, y));
             }
@@ -49,6 +49,15 @@ public class Raytracer {
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
         Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y), 1000000);
+        /*
+        if(x==400&&y==300) {
+            Log.print(this, "pOrigin: " + primaryRay.getpOrigin());
+            Log.print(this, "destinationPoint: " + primaryRay.getDestinationPoint());
+            Log.print(this, "direction: " + primaryRay.getDirection());
+            Log.print(this, "length: " + primaryRay.getLength());
+        }
+        */
+
         RgbColor pixelColor = new RgbColor(.1f,.1f,.1f);
 
         Intersection intersection = new Intersection(false);
