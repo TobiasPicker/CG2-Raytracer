@@ -16,6 +16,7 @@
 
 package raytracer;
 
+import scene.Camera;
 import scene.Scene;
 import scene.Shape;
 import ui.Window;
@@ -86,6 +87,7 @@ public class Raytracer {
             Shape frontShape = intersection.getShape();
             //Log.print(this, "ray hits");
             pixelColor = pixelColor.add(frontShape.getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
+            //Log.print(this, ""+ scene.getCamera().getPosition());
 
             for(int i=0; i<scene.lightList.size();i++){
 

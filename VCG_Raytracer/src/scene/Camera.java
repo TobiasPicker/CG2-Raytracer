@@ -24,7 +24,7 @@ public class Camera extends SceneObject {
         this.centerOfInterest = centerOfInterest;
         this.viewAngle = viewAngle;
         this.focalLength = focalLength;
-        this.height = 2f * (float)Math.tan(viewAngle/2f);
+        this.height = 2* (float)Math.tan( (viewAngle * (Math.PI / 360f)) / 2f);
         this.width  = 4f * height / 3f;
         calculateCamCoord();
         this.centerPoint = position.add(camViewVec.multScalar(focalLength));
