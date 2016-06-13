@@ -36,8 +36,8 @@ public class Raytracer {
     }
 
     public void renderScene() {
-        for (int y = 300; y < 301; y++) {
-            for (int x = 400; x < 401; x++) {
+        for (int y = 0; y < 600; y++) {
+            for (int x = 0; x < 800; x++) {
                 //Log.print(this,"1. " + x+"; "+y);
                 mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x, y), new Vec2(x, y));
             }
@@ -48,7 +48,7 @@ public class Raytracer {
 
     //sends a Ray and throws back an RgbColor
     private RgbColor sendPrimaryRay(int x, int y){
-        Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y), 1000000);
+        Ray primaryRay = new Ray(scene.getCamera().getPosition(), scene.getCamera().calculateDestinationPoint(x, y));
         /*
         if(x==400&&y==300) {
             Log.print(this, "pOrigin: " + primaryRay.getpOrigin());
@@ -111,6 +111,8 @@ public class Raytracer {
                 else if(frontShape.getMaterial().materialType.equals("Phong")){
 
                     Vec3 viewVec = scene.getCamera().getPosition().sub(intersectionPoint);
+                    //Log.print(this, "ViewVec: " + viewVec);
+                    //Log.print(this, "IntersectionPoint: " + intersectionPoint);
                     viewVec = viewVec.normalize();
                     pixelColor = pixelColor.add(frontShape.getMaterial().calculatePhong(lightVec, intersection.getNormal(), lightColor, viewVec));
                 }
