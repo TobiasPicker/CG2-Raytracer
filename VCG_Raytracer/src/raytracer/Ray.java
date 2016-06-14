@@ -9,17 +9,18 @@ public class Ray{
     private Vec3 direction;
     private float length;
 
-    public Ray(Vec3 pOrigin, Vec3 destinationPoint){
-        this.pOrigin = pOrigin;
-        this.destinationPoint = destinationPoint;
-        this.direction = calculateDirection();
-    }
-
+    //constructor for spheres
     public Ray(Vec3 pOrigin, Vec3 direction, float length){
         this.pOrigin = pOrigin;
         this.direction = direction;
         this.length = length;
-        //Log.print(this, "direction" + direction);
+    }
+
+    //default constructor
+    public Ray(Vec3 pOrigin, Vec3 destinationPoint){
+        this.pOrigin = pOrigin;
+        this.destinationPoint = destinationPoint;
+        this.direction = calculateDirection();
     }
 
     public Vec3 calculateDirection(){
@@ -27,6 +28,8 @@ public class Ray{
         direction = direction.normalize();
         return direction;
     }
+
+    ///// Getter & Setter /////
 
     public Vec3 getDirection() {
         return direction;
@@ -36,21 +39,7 @@ public class Ray{
         return pOrigin;
     }
 
-    public void setDirection(Vec3 direction) {
-        this.direction = direction.normalize();
-    }
-
-    public Vec3 getDestinationPoint() {
-        return destinationPoint;
-    }
-
-    public void setpOrigin(Vec3 pOrigin) {
-        this.pOrigin = pOrigin;
-    }
-
     public float getLength() {
         return length;
     }
 }
-
-

@@ -15,16 +15,16 @@ public class Shape extends SceneObject {
     protected Matrix4 pointMatrix;
     protected Matrix4 normalMatrix;
 
-
+    //constructor for spheres
     public Shape(Vec3 position, Material material, String objectType){
         super(position);
         this.pointMatrix = new Matrix4().translate(position);
         this.normalMatrix = pointMatrix.invert().transpose();
-        //Log.print(this, ""+normalMatrix);
         this.material = material;
         this.objectType = objectType;
     }
 
+    //constructor for planes
     public Shape(Vec3 position, Vec3 normal, Material material, String objectType){
         super(position);
         this.normal = normal;
@@ -32,12 +32,15 @@ public class Shape extends SceneObject {
         this.objectType = objectType;
     }
 
+    // publication of intersect methode
     public Intersection intersect(Ray ray){
         return new Intersection(false);
     }
 
+    ///// Getter & Setter /////
+
     public Material getMaterial(){
-        return this.material;
+        return material;
     }
 
     public Vec3 getNormal() {

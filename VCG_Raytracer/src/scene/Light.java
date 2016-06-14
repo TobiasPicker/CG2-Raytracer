@@ -12,6 +12,8 @@ public class Light extends SceneObject{
         this.color = color;
     }
 
+    ///// Getter & Setter /////
+
     public RgbColor getColor(){
         return color;
     }

@@ -18,7 +18,7 @@ public class Camera extends SceneObject {
     private Vec3 heightVec;
     private Vec3 centerPoint;
 
-
+    //constructor
     public Camera(Vec3 position, Vec3 userUp, Vec3 centerOfInterest, float viewAngle, float focalLength){
         super(position);
         this.userUp = userUp;
@@ -29,10 +29,9 @@ public class Camera extends SceneObject {
         this.width  = 4f * height / 3f;
         calculateCamCoord();
         this.centerPoint = position.add(camViewVec.multScalar(focalLength));
-        //Log.print(this,"centerPoint: "+ centerPoint);
     }
 
-    //calculation of cameracoordinationsystem
+    //calculation of camera coordinate system
     private void calculateCamCoord(){
 
         this.camViewVec = centerOfInterest.sub(position);
@@ -46,18 +45,9 @@ public class Camera extends SceneObject {
 
         widthVec = camSideVec.multScalar(0.5f*width);
         heightVec = camUpVec.multScalar(0.5f*height);
-
-        /*
-        Log.print(this,"Breite: "+ width);
-        Log.print(this,"Höhe: "+ height);
-        Log.print(this,"upVec: "+ camUpVec);
-        Log.print(this,"sideVec: "+ camSideVec);
-        Log.print(this,"viewVec: "+ camViewVec);
-        Log.print(this,"Richtung in Breite: "+ widthVec);
-        Log.print(this,"Richtung in Höhe: "+ heightVec);
-        */
     }
 
+    //calculates each destination point for ray
     public Vec3 calculateDestinationPoint(int x, int y){
 
         //normalize x and y pixel positions
@@ -66,13 +56,11 @@ public class Camera extends SceneObject {
         yNorm = 2*((y + 0.5f)/600)-1;
 
         Vec3 destinationPoint = centerPoint.add(widthVec.multScalar(xNorm)).add(heightVec.multScalar(yNorm));
-        //destinationPoint = destinationPoint.add(heightVec.multScalar(yNorm));
         destinationPoint.y = -destinationPoint.y;
-        //if(x==400&&y==300) {
-        //    Log.print(this, "destpoint: " + destinationPoint);
-        //}
         return destinationPoint;
     }
+
+    ///// Getter & Setter /////
 
     public Vec3 getPosition() {
         return this.position;

@@ -10,6 +10,8 @@ public class AmbientLight{
         this.color = color;
     }
 
+    ///// Getter & Setter /////
+
     public RgbColor getColor() {
         return color;
     }

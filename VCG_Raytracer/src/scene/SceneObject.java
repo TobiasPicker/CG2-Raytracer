@@ -3,11 +3,14 @@ package scene;
 import utils.Vec3;
 
 public class SceneObject {
+
     protected Vec3 position = new Vec3();
 
     public SceneObject(Vec3 position){
         this.position = position;
     }
+
+    ///// Getter & Setter /////
 
     public Vec3 getPosition() {
         return position;
