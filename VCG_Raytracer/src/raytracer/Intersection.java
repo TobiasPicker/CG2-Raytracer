@@ -60,4 +60,8 @@ public class Intersection {
     public boolean isHit() {
         return hit;
     }
+
+    public Ray getInRay() {
+        return inRay;
+    }
 }

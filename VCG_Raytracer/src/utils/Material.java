@@ -3,14 +3,15 @@ package utils;
 public class Material {
 
     public String materialType;
-    protected boolean reflective;
-    protected boolean refractive;
+    protected float reflectivity = 0;
+    protected float refractivity = 0;
     RgbColor ambient;
 
-    //constructor for non-reflective/refractive materials
-    public Material(RgbColor ambient, String materialType){
+    public Material(RgbColor ambient, String materialType,float reflective, float refractive){
         this.ambient = ambient;
         this.materialType = materialType;
+        this.reflectivity = reflective;
+        this.refractivity = refractive;
     }
 
     //calculation of ambient color
@@ -26,5 +27,15 @@ public class Material {
 
     public RgbColor calculatePhong(Vec3 lightVec, Vec3 normal, RgbColor lightColor, Vec3 viewVec){
         return ambient;
+    }
+
+
+    //getter&setter
+    public float getReflectivity() {
+        return reflectivity;
+    }
+
+    public float getRefractivity() {
+        return refractivity;
     }
 }

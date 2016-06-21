@@ -6,7 +6,7 @@ public class Lambert extends Material {
 
     //constructor
     public Lambert(RgbColor ambient,RgbColor diffuse){
-        super(ambient, "Lambert");
+        super(ambient, "Lambert", 0, 0);
         this.diffuse = diffuse;
     }
 

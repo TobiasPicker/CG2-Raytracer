@@ -7,8 +7,8 @@ public class Phong extends Material {
     float n;
 
     //constructor
-    public Phong(RgbColor ambient, RgbColor diffuse, RgbColor specular,float n){
-        super(ambient, "Phong");
+    public Phong(RgbColor ambient, RgbColor diffuse, RgbColor specular,float n,float reflective, float refractive){
+        super(ambient, "Phong", reflective, refractive);
         this.diffuse = diffuse;
         this.specular = specular;
         this.n = n;
