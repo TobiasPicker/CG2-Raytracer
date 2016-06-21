@@ -9,7 +9,7 @@ public class Ray{
     private Vec3 direction;
     private float length;
 
-    //constructor for spheres
+    //constructor via direction
     public Ray(Vec3 pOrigin, Vec3 direction, float length){
         this.pOrigin = pOrigin;
         this.direction = direction;

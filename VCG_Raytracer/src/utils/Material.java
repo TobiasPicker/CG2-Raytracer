@@ -3,8 +3,11 @@ package utils;
 public class Material {
 
     public String materialType;
+    protected boolean reflective;
+    protected boolean refractive;
     RgbColor ambient;
 
+    //constructor for non-reflective/refractive materials
     public Material(RgbColor ambient, String materialType){
         this.ambient = ambient;
         this.materialType = materialType;

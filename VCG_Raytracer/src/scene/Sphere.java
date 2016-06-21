@@ -41,31 +41,34 @@ public class Sphere extends Shape {
         //ray does hit
         else {
             //calculation of distance between camera and sphere
-            double t;
-            double t0 = (-b - Math.sqrt(discriminant)) / 2d;
-            double t1 = (-b + Math.sqrt(discriminant)) / 2d;
+            double localT;
+            double localT0 = (-b - Math.sqrt(discriminant)) / 2d;
+            double localT1 = (-b + Math.sqrt(discriminant)) / 2d;
 
             //checking for smallest distance
-            if(Math.abs(t0)<Math.abs(t1)){
-                t = t0;
+            if(Math.abs(localT0)<Math.abs(localT1)){
+                localT = localT0;
             }else{
-                t = t1;
+                localT = localT1;
             }
 
-            if (t > 10E-9) {
+            if (localT > 10E-5) {
 
                 //calculation of beamed intersection point
-                Vec3 intersectionPoint = tempRay.getpOrigin().add(tempRay.getDirection().multScalar((float)t));
+                Vec3 intersectionPoint = tempRay.getpOrigin().add(tempRay.getDirection().multScalar((float)localT));
+
+                //back-transformation
                 intersectionPoint = pointMatrix.multVec3(intersectionPoint, true);
+                float globalT = intersectionPoint.sub(ray.getpOrigin()).length();
 
                 //calculation of beamed normal
                 Vec3 normal = intersectionPoint.sub(this.position);
                 normal = normal.multScalar(1f/radius);
                 normal = normal.normalize();
 
-                return new Intersection(ray,(float)t, intersectionPoint, normal, this, true);
+                return new Intersection(ray,globalT, intersectionPoint, normal, this, true);
 
-            } else {
+                } else {
                 return new Intersection(false);
             }
         }

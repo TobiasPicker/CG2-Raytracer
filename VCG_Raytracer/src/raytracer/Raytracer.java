@@ -19,6 +19,7 @@ package raytracer;
 import scene.Camera;
 import scene.Scene;
 import scene.Shape;
+import sun.security.ssl.Debug;
 import ui.Window;
 import utils.*;
 import java.awt.image.BufferedImage;
@@ -78,24 +79,56 @@ public class Raytracer {
 
             //run through all lights
             for(int i=0; i<scene.lightList.size();i++){
+
+                //parameter for secondaryRay
                 Vec3 intersectionPoint = intersection.getInterSectionPoint();
                 Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersectionPoint);
+                float shadowRayLength = lightVec.length();
                 lightVec = lightVec.normalize();
-                RgbColor lightColor = scene.lightList.get(i).getColor();
 
-                //calculation of Lambert
-                if (frontShape.getMaterial().materialType.equals("Lambert")) {
-                    pixelColor = pixelColor.add(frontShape.getMaterial().calculateLambert(lightVec, intersection.getNormal(), lightColor));
-                }
-                //calculation of Phong
-                else if(frontShape.getMaterial().materialType.equals("Phong")){
-                    Vec3 viewVec = scene.getCamera().getPosition().sub(intersectionPoint);
-                    viewVec = viewVec.normalize();
-                    pixelColor = pixelColor.add(frontShape.getMaterial().calculatePhong(lightVec, intersection.getNormal(), lightColor, viewVec));
+                ////////////shadow-ray///////////////
+                boolean inShadow = sendShadowRay(intersectionPoint, lightVec, shadowRayLength);
+
+                //if intersectionPoint is not in shade proceed with lambert/phong
+                if(!inShadow) {
+
+                    RgbColor lightColor = scene.lightList.get(i).getColor();
+                    //calculation of Lambert
+                    if (frontShape.getMaterial().materialType.equals("Lambert")) {
+                        pixelColor = pixelColor.add(frontShape.getMaterial().calculateLambert(lightVec, intersection.getNormal(), lightColor));
+                    }
+                    //calculation of Phong
+                    else if (frontShape.getMaterial().materialType.equals("Phong")) {
+                        Vec3 viewVec = scene.getCamera().getPosition().sub(intersectionPoint);
+                        viewVec = viewVec.normalize();
+                        pixelColor = pixelColor.add(frontShape.getMaterial().calculatePhong(lightVec, intersection.getNormal(), lightColor, viewVec));
+                    }
                 }
             }
         }
 
         return pixelColor;
     }
+
+    private boolean sendShadowRay(Vec3 intersectionPoint, Vec3 lightVec, float shadowRayLength){
+
+        Ray shadowRay = new Ray(intersectionPoint, lightVec, shadowRayLength);
+
+        Intersection intersection;
+        boolean inShadow = false;
+
+        for(int i=0; i<scene.shapeList.size();i++) {
+
+            intersection = scene.shapeList.get(i).intersect(shadowRay);
+
+            if(intersection.isHit()&&(intersection.getDistance()<shadowRayLength)){
+
+                inShadow = true;
+                break;
+            }
+        }
+
+        return inShadow;
+    }
 }
+

@@ -29,7 +29,7 @@ public class Plane extends Shape {
             float t = -(this.normal.scalar(ray.getpOrigin()) + q) / this.normal.scalar(ray.getDirection()); //distance between camera and plane
 
             //creates an intersection object
-            if (t > 10E-9) {
+            if (t > 10E-5) {
                 return new Intersection(ray, t, this, true);
             } else {
                 return new Intersection(false);

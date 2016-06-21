@@ -52,14 +52,14 @@ public class Main {
         setupCamera(scene);
         setupLights(scene);
 
-        scene.createPlane(new Vec3(10, 0, 0), new Vec3(-1, 0, 0), new Lambert(new RgbColor(.1f,.1f,.1f),new RgbColor(0,0,1))); //Right
-        scene.createPlane(new Vec3(0, 10, 0), new Vec3(0, -1, 0), new Lambert(new RgbColor(.1f,.1f,.1f),new RgbColor(1,1,1))); //Top
-        scene.createPlane(new Vec3(-10, 0, 0), new Vec3(1, 0, 0), new Lambert(new RgbColor(.1f,.1f,.1f),new RgbColor(1,0,0))); //Left
-        scene.createPlane(new Vec3(0, -10, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(.1f,.1f,.1f),new RgbColor(1,1,1))); //Bottom
-        scene.createPlane(new Vec3(0, 0, -10), new Vec3(0, 0, 1), new Lambert(new RgbColor(.1f,.1f,.1f),new RgbColor(1,1,1))); //Back
+        scene.createPlane(new Vec3(10, 0, 0), new Vec3(-1, 0, 0), new Lambert(new RgbColor(.0f,.8f,0f),new RgbColor(0,.5f,0))); //Right
+        scene.createPlane(new Vec3(0, 10, 0), new Vec3(0, -1, 0), new Lambert(new RgbColor(.8f,.8f,.8f),new RgbColor(.5f,.5f,.5f))); //Top
+        scene.createPlane(new Vec3(-10, 0, 0), new Vec3(1, 0, 0), new Lambert(new RgbColor(.8f,.0f,.0f),new RgbColor(.5f,0,0))); //Left
+        scene.createPlane(new Vec3(0, -10, 0), new Vec3(0, 1, 0), new Lambert(new RgbColor(.8f,.8f,.8f),new RgbColor(.5f,.5f,.5f))); //Bottom
+        scene.createPlane(new Vec3(0, 0, -10), new Vec3(0, 0, 1), new Lambert(new RgbColor(.8f,.8f,.8f),new RgbColor(.5f,.5f,.5f))); //Back
 
-        scene.createSphere(new Vec3(4, -6, -6), 2f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(1f,0,0),new RgbColor(.5f,.7f,.25f),3)); //red
-        scene.createSphere(new Vec3(-5, -6, -8), 2f, new Phong(new RgbColor(.5f,.5f,.5f),new RgbColor(0,0,1f),new RgbColor(.25f,.5f,.7f),5)); //blue
+        scene.createSphere(new Vec3(4, -6, -6), 2f, new Phong(new RgbColor(.25f,.1f,.1f),new RgbColor(1f,0,0),new RgbColor(.5f,.7f,.25f),3)); //red
+        scene.createSphere(new Vec3(-5, -6, -8), 2f, new Phong(new RgbColor(.1f,.1f,.35f),new RgbColor(0,0,1f),new RgbColor(.25f,.5f,.7f),5)); //blue
     }
 
     //specifying the parameters of the camera and adding the camera object to scene
@@ -75,8 +75,10 @@ public class Main {
 
     //specifying the parameters of the lights and adding the light objects to scene.lightList
     private static void setupLights(Scene scene){
-        scene.createAmbientLight(new RgbColor(.1f,.1f,.1f));
-        scene.createLight(new Vec3(-3,0,10), new RgbColor(0.75f,0.75f,0.75f), "PointLight");
+        scene.createAmbientLight(new RgbColor(.2f,.2f,.2f));
+        scene.createLight(new Vec3(0,9.9f,-5), new RgbColor(1f,1f,1f), "PointLight");
+        //scene.createLight(new Vec3(-3,5,-9), new RgbColor(0.5f,0.5f,0.5f), "PointLight");
+        //scene.createLight(new Vec3(0,0,0), new RgbColor(0.5f,0.5f,0.5f), "PointLight");
     }
 
     private static void draw(Window renderWindow, Scene scene){
