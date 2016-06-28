@@ -29,12 +29,18 @@ public class Raytracer {
     private Window mRenderWindow;
     private Scene scene;
     private Camera camera;
+    //max how much rays can be reflected/-fracted
+    private final int RECURSIONDEPTH;
+    private int recursionCount;
+
 
     //constructor
-    public Raytracer(Window renderWindow, Scene scene) {
+    public Raytracer(Window renderWindow, Scene scene, int recursionDepth) {
         mBufferedImage = renderWindow.getBufferedImage();
         mRenderWindow = renderWindow;
         this.scene = scene;
+        this.RECURSIONDEPTH = recursionDepth;
+        this.recursionCount = RECURSIONDEPTH;
         this.camera = scene.getCamera();
     }
 
@@ -42,7 +48,6 @@ public class Raytracer {
     public void renderScene() {
         for (int y = 0; y < 600; y++) {
             for (int x = 0; x < 800; x++) {
-                //Log.print(this,"1. " + x+"; "+y);
                 mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x, y), new Vec2(x, y));
             }
         }
@@ -98,7 +103,7 @@ public class Raytracer {
                 if(!inShadow) {
 
                     //non reflective/refractive portion
-                    float colorPortion = 1-frontShape.getMaterial().getReflectivity()-frontShape.getMaterial().getRefractivity();
+                    float colorPortion = 1-frontShape.getMaterial().getReflectivity()-frontShape.getMaterial().getRefractivity();//refractivity between 0 and 1, not yet interpreted as snellius!
 
                     RgbColor lightColor = scene.lightList.get(i).getColor();
                     //calculation of Lambert
@@ -113,8 +118,11 @@ public class Raytracer {
                     }
                 }
 
-                if(frontShape.getMaterial().getReflectivity()>0){
-                    pixelColor = pixelColor.add(sendSecondaryRay(intersection, lightVec).multScalar(frontShape.getMaterial().getReflectivity()));
+                //first call of reflection/-fraction
+                if((frontShape.getMaterial().getReflectivity()>0 || frontShape.getMaterial().getRefractivity()>0) && RECURSIONDEPTH>0){
+                    //Log.print(this, ""+RECURSIONDEPTH);
+                    pixelColor = pixelColor.add(sendSecondaryRay(intersection));
+                    recursionCount = RECURSIONDEPTH;
                 }
             }
         }
@@ -143,16 +151,50 @@ public class Raytracer {
         return inShadow;
     }
 
-    public RgbColor sendSecondaryRay(Intersection start, Vec3 lightVec){
+    public RgbColor sendSecondaryRay(Intersection start){
+
+        //if recursionCount reaches 0, no more recursive calls of sendSecondaryRay will occur
+        recursionCount--;
+
         RgbColor pixelColor = new RgbColor(0,0,0);
         Ray inRay = start.getInRay();
+        Vec3 inRayVec = inRay.getDirection().multScalar(-1);
         Vec3 normal = start.getNormal();
-        float cosRefAngle = normal.scalar(inRay.getDirection().multScalar(-1));
-
-        Vec3 refVec = normal.multScalar(2*cosRefAngle).sub(inRay.getDirection().multScalar(-1));
         float length = 100000;
+        //cosine of angle between inRay and normal
+        float cosInRayAngle = normal.scalar(inRayVec);
 
+        Vec3 refVec = new Vec3();
+        float reflectivity = start.getShape().getMaterial().getReflectivity();
+        float refractivity = start.getShape().getMaterial().getRefractivity();
+
+        if(reflectivity>0) {
+            //calculating reflection vector
+            refVec = normal.multScalar(2 * cosInRayAngle).sub(inRay.getDirection().multScalar(-1));
+            refVec = refVec.normalize();
+        }else if(refractivity>0){//refraction only for spheres
+
+            //calculating refraction vector
+            double tempCosOutRayAngle = Math.sqrt(1-Math.pow(1/refractivity, 2)*(1-Math.pow( normal.scalar(inRayVec) ,2))); //cosine of angle between outRay and normal
+
+            Vec3 tempRefVec = normal.multScalar(cosInRayAngle).sub(inRayVec).multScalar(1/refractivity);
+            tempRefVec = refVec.sub(normal.multScalar((float)tempCosOutRayAngle));
+
+
+            Ray tempRay = new Ray(start.getInterSectionPoint(), tempRefVec, length);
+            Intersection tempIntersection = start.getShape().intersect(tempRay);
+
+            double cosOutRayAngle = Math.sqrt(1-(Math.pow(1, 2)*(1-Math.pow( tempIntersection.getNormal().scalar(tempRefVec.multScalar(-1)) ,2))));
+
+            refVec = tempIntersection.getNormal().multScalar(cosInRayAngle).sub(tempRefVec.multScalar(-1)).multScalar(1);
+            refVec = refVec.sub(tempIntersection.getNormal().multScalar((float)cosOutRayAngle));
+            refVec = refVec.normalize();
+
+        }
+
+        //sending the reflected or refracted ray
         Ray secondaryRay = new Ray(start.getInterSectionPoint(), refVec, length);
+
         Intersection intersection = new Intersection(false);
             //check for nearest intersection point
         for(int i=0; i<scene.shapeList.size();i++) {
@@ -179,7 +221,7 @@ public class Raytracer {
 
                 //parameter for secondaryRay
                 Vec3 intersectionPoint = intersection.getInterSectionPoint();
-                lightVec = scene.lightList.get(i).getPosition().sub(intersectionPoint);
+                Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersectionPoint);
                 float shadowRayLength = lightVec.length();
                 lightVec = lightVec.normalize();
 
@@ -190,7 +232,7 @@ public class Raytracer {
                 if(!inShadow) {
 
                     //non reflective/refractive portion
-                    float colorPortion = 1-frontShape.getMaterial().getReflectivity()-frontShape.getMaterial().getRefractivity();
+                    float colorPortion = 1-frontShape.getMaterial().getReflectivity()-frontShape.getMaterial().getRefractivity();//refractivity between 0 and 1, not yet interpreted as snellius!
 
                     RgbColor lightColor = scene.lightList.get(i).getColor();
                     //calculation of Lambert
@@ -205,8 +247,9 @@ public class Raytracer {
                     }
                 }
 
-                if(frontShape.getMaterial().getReflectivity()>0){
-                    pixelColor = pixelColor.add(sendSecondaryRay(intersection, lightVec));
+                //recursive call
+                if((frontShape.getMaterial().getRefractivity()>0 || frontShape.getMaterial().getReflectivity()>0) && recursionCount>0){
+                    pixelColor = pixelColor.add(sendSecondaryRay(intersection));
                 }
             }
         }
