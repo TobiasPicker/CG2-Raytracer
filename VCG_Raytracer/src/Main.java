@@ -67,7 +67,7 @@ public class Main {
         scene.createPlane(new Vec3(0, 0, -10), new Vec3(0, 0, 1), new Phong(new RgbColor(.1f,.8f,.8f),new RgbColor(.5f,.5f,.5f),new RgbColor(.5f,.5f,.5f),3,.5f,0)); //Back
         scene.createPlane(new Vec3(0, 0, 20), new Vec3(0, 0, -1), new Phong(new RgbColor(.8f,.8f,.8f),new RgbColor(.5f,.5f,.5f),new RgbColor(.25f,.5f,.7f),5, .5f, 0)); //Front
         */
-        scene.createSphere(new Vec3(4, -6, -6), 2f, new Phong(new RgbColor(.25f,.1f,.1f),new RgbColor(1f,0,0), new RgbColor(.5f,.7f,.25f), 3, 0, 1f)); //red
+        scene.createSphere(new Vec3(4, -6, -6), 2f, new Phong(new RgbColor(.25f,.1f,.1f),new RgbColor(1f,0,0), new RgbColor(.5f,.7f,.25f), 3, 0, 1.5f)); //red
         scene.createSphere(new Vec3(-5, -6, -8), 2f, new Phong(new RgbColor(.1f,.1f,.35f),new RgbColor(0,0,1f),new RgbColor(.25f,.5f,.7f), 5, 1f, 0)); //blue
         scene.createSphere(new Vec3(7, -6, -1f), 1f, new Phong(new RgbColor(.1f,.35f,.1f),new RgbColor(0,1,0f),new RgbColor(.25f,.5f,.7f), 5, 1f, 0)); //green
     }

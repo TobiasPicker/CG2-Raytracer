@@ -151,7 +151,7 @@ public class Raytracer {
         return inShadow;
     }
 
-    public RgbColor sendSecondaryRay(Intersection start){
+    private RgbColor sendSecondaryRay(Intersection start){
 
         //if recursionCount reaches 0, no more recursive calls of sendSecondaryRay will occur
         recursionCount--;
@@ -161,6 +161,7 @@ public class Raytracer {
         Vec3 inRayVec = inRay.getDirection().multScalar(-1);
         Vec3 normal = start.getNormal();
         float length = 100000;
+        Intersection tempIntersection = new Intersection(false);
         //cosine of angle between inRay and normal
         float cosInRayAngle = normal.scalar(inRayVec);
 
@@ -172,28 +173,30 @@ public class Raytracer {
             //calculating reflection vector
             refVec = normal.multScalar(2 * cosInRayAngle).sub(inRay.getDirection().multScalar(-1));
             refVec = refVec.normalize();
+            tempIntersection = start;
         }else if(refractivity>0){//refraction only for spheres
 
             //calculating refraction vector
             double tempCosOutRayAngle = Math.sqrt(1-Math.pow(1/refractivity, 2)*(1-Math.pow( normal.scalar(inRayVec) ,2))); //cosine of angle between outRay and normal
 
             Vec3 tempRefVec = normal.multScalar(cosInRayAngle).sub(inRayVec).multScalar(1/refractivity);
-            tempRefVec = refVec.sub(normal.multScalar((float)tempCosOutRayAngle));
+            tempRefVec = tempRefVec.sub(normal.multScalar((float)tempCosOutRayAngle));
 
 
             Ray tempRay = new Ray(start.getInterSectionPoint(), tempRefVec, length);
-            Intersection tempIntersection = start.getShape().intersect(tempRay);
+            tempIntersection = start.getShape().intersect(tempRay);
 
-            double cosOutRayAngle = Math.sqrt(1-(Math.pow(1, 2)*(1-Math.pow( tempIntersection.getNormal().scalar(tempRefVec.multScalar(-1)) ,2))));
+            float tempCosInRayAngle = tempIntersection.getNormal().multScalar(-1).scalar(tempRay.getDirection().multScalar(-1));
+            double cosOutRayAngle = Math.sqrt(1-(Math.pow(refractivity, 2)*(1-Math.pow( tempIntersection.getNormal().scalar(tempRefVec.multScalar(-1)) ,2))));
 
-            refVec = tempIntersection.getNormal().multScalar(cosInRayAngle).sub(tempRefVec.multScalar(-1)).multScalar(1);
+            refVec = tempIntersection.getNormal().multScalar(tempCosInRayAngle).sub(tempRefVec.multScalar(-1)).multScalar(refractivity);
             refVec = refVec.sub(tempIntersection.getNormal().multScalar((float)cosOutRayAngle));
             refVec = refVec.normalize();
 
         }
 
         //sending the reflected or refracted ray
-        Ray secondaryRay = new Ray(start.getInterSectionPoint(), refVec, length);
+        Ray secondaryRay = new Ray(tempIntersection.getInterSectionPoint(), refVec, length);
 
         Intersection intersection = new Intersection(false);
             //check for nearest intersection point
