@@ -33,7 +33,7 @@ public class RgbColor {
     public void add(float r, float g, float b){
         colors.x += r;
         colors.y += g;
-        colors.z += g;
+        colors.z += b;
 
         clamp();
     }

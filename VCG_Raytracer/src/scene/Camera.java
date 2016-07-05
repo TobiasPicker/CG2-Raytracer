@@ -48,14 +48,14 @@ public class Camera extends SceneObject {
     }
 
     //calculates each destination point for ray
-    public Vec3 calculateDestinationPoint(int x, int y){
+    public Vec3 calculateDestinationPoint(int m, int n, int supersampling){
 
         //normalize x and y pixel positions
-        float yNorm, xNorm;
-        xNorm = 2*((x + 0.5f)/800)-1;
-        yNorm = 2*((y + 0.5f)/600)-1;
+        float nNorm, mNorm;
+        mNorm = 2*((m + 0.5f)/(800*supersampling))-1;
+        nNorm = 2*((n + 0.5f)/(600*supersampling))-1;
 
-        Vec3 destinationPoint = centerPoint.add(widthVec.multScalar(xNorm)).add(heightVec.multScalar(yNorm));
+        Vec3 destinationPoint = centerPoint.add(widthVec.multScalar(mNorm)).add(heightVec.multScalar(nNorm));
         destinationPoint.y = -destinationPoint.y;
         return destinationPoint;
     }
