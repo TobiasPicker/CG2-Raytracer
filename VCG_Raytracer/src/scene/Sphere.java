@@ -55,7 +55,7 @@ public class Sphere extends Shape {
                 localT = localT1;
             }
 
-            if (localT > 10E-5) {
+            if (localT > 10E-4) {
 
                 //calculation of beamed intersection point
                 Vec3 intersectionPoint = tempRay.getpOrigin().add(tempRay.getDirection().multScalar((float)localT));
