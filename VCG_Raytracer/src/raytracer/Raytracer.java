@@ -185,7 +185,7 @@ public class Raytracer {
 
         //ray, which gets reflected or refracted
         Ray inRay = start.getInRay();
-        Vec3 inRayVec = inRay.getDirection().multScalar(-1);
+        Vec3 inRayVec = inRay.getDirection().negate();
         Vec3 normalIn = start.getNormal();
         float length = 100000;
 
@@ -201,25 +201,29 @@ public class Raytracer {
 
         if (reflectivity > 0) {
             //calculating reflection vector
-            refVec = normalIn.multScalar(2 * cosAlphaIn).sub(inRay.getDirection().multScalar(-1));
+            refVec = normalIn.multScalar(2 * cosAlphaIn).sub(inRay.getDirection().negate());
             refVec = refVec.normalize();
             tempIntersection = start;
         } else if (refractivity >= 1) {//refraction only for spheres
 
-            float cosBetaIn = (float)Math.sqrt(1 - ( 1/(refractivity*refractivity) ) * (1 - cosAlphaIn*cosAlphaIn));
+            float cosBetaIn = (float)Math.sqrt(1 - (( 1/(refractivity*refractivity) ) * (1 - (cosAlphaIn*cosAlphaIn))));
             Vec3 innerRayVec = normalIn.multScalar(cosAlphaIn).sub(inRayVec).multScalar(1/refractivity).sub(normalIn.multScalar(cosBetaIn));
+            innerRayVec = innerRayVec.normalize();
 
+            //ray inside of sphere
             Ray innerRay = new Ray(start.getInterSectionPoint(),innerRayVec, 100000);
 
             Intersection end = start.getShape().intersect(innerRay);
 
             if(end.isHit()) {
                 Vec3 normalOut = end.getNormal();
+                normalOut.normalize();
 
-                float cosAlphaOut = normalOut.scalar(innerRayVec) ;
-                float cosBetaOut = (float) Math.sqrt(1 - (refractivity * refractivity) * (1 - cosAlphaOut * cosAlphaOut));
+                float cosAlphaOut = normalOut.negate().scalar(innerRayVec.negate()) ;
+                float cosBetaOut = (float) Math.sqrt(1 - (refractivity * refractivity) * (1 - (cosAlphaOut * cosAlphaOut)));
 
-                refVec = normalOut.multScalar(cosAlphaOut).sub(normalOut.negate().multScalar(cosBetaOut)).multScalar(refractivity);
+                refVec = normalOut.negate().multScalar(cosAlphaOut).sub(innerRayVec.negate()).multScalar(refractivity).sub(normalOut.negate().multScalar(cosBetaOut));
+                refVec.normalize();
                 tempIntersection = end;
             }else{
                 refVec = innerRayVec;
@@ -234,8 +238,8 @@ public class Raytracer {
         Ray secondaryRay = new Ray(tempIntersection.getInterSectionPoint(), refVec, length);
 
         Intersection intersection = new Intersection(false);
-        //check for nearest intersection point
 
+        //check for nearest intersection point
         intersection = getNearestIntersection(secondaryRay, intersection);
 
         //ray does not hit --> set backgroundColor
@@ -266,7 +270,9 @@ public class Raytracer {
                     if(frontShape.getMaterial().getRefractivity()<1) {
                         colorPortion = 1 - frontShape.getMaterial().getReflectivity();
                     }
+
                     RgbColor lightColor = scene.lightList.get(i).getColor();
+
                     //calculation of Lambert
                     if (frontShape.getMaterial().materialType.equals("Lambert")) {
                         pixelColor = pixelColor.add(frontShape.getMaterial().calculateLambert(lightVec, intersection.getNormal(), lightColor));
