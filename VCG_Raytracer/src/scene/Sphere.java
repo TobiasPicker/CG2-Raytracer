@@ -32,7 +32,6 @@ public class Sphere extends Shape {
         float b = 2*(tempRay.getpOrigin().scalar(tempRay.getDirection()));
         float c = tempRay.getpOrigin().scalar(tempRay.getpOrigin()) - radius*radius;
         float discriminant = b*b - 4*c;
-        //Log.print(this,"discriminant: " + discriminant);
 
         //ray does not hit
         if(discriminant<0){
@@ -45,8 +44,6 @@ public class Sphere extends Shape {
             double localT;
             double localT0 = (-b - Math.sqrt(discriminant)) / 2d;
             double localT1 = (-b + Math.sqrt(discriminant)) / 2d;
-
-            //Log.print(this, "t0: " + localT0 + "; t1: " + localT1);
 
             //checking for smallest distance
             if(localT0<localT1 && localT0>10E-5){

@@ -30,8 +30,7 @@ public class Raytracer {
     private Window mRenderWindow;
     private Scene scene;
     private Camera camera;
-    //max how much rays can be reflected/-fracted
-    private final int RECURSIONDEPTH;
+    private final int RECURSIONDEPTH; //max how often rays can be reflected/-fracted
     private int recursionCount;
     private int recursionDropOff = 1;
     private int superSampling;
@@ -57,25 +56,27 @@ public class Raytracer {
 
                 float r = 0, g = 0, b = 0;
 
+                //dividing pixel into subPixel
                 for(int n = superSampling*y; n<superSampling*(y+1);n++){
                     for(int m = superSampling*x; m<superSampling*(x+1);m++){
 
+                        //sends a ray through each subPixel of one pixel and adds together the color values
                         RgbColor subPixel = sendPrimaryRay(m, n, superSampling);
-                        //Log.print(this, "m: "+m+"; n: "+n);
                         r += subPixel.red();
                         g += subPixel.green();
                         b += subPixel.blue();
                     }
                 }
 
+                //calculates average
                 r = r/(superSampling*superSampling);
                 g = g/(superSampling*superSampling);
                 b = b/(superSampling*superSampling);
 
+                //draws pixel
                 RgbColor pixel = new RgbColor(r,g,b);
                 mRenderWindow.setPixel(mBufferedImage, pixel, new Vec2(x, y));
 
-                //mRenderWindow.setPixel(mBufferedImage, sendPrimaryRay(x,y,1), new Vec2(x, y));
             }
         }
 
@@ -83,7 +84,7 @@ public class Raytracer {
         IO.saveImageToPng(mBufferedImage, "raytracing.png");
     }
 
-    //sends a Ray through each pixel and throws back an RgbColor
+    //sends a Ray through each subPixel and throws back an RgbColor
     private RgbColor sendPrimaryRay(int m, int n,int superSampling){
 
         //dafault pixelColor
@@ -102,13 +103,14 @@ public class Raytracer {
 
         //ray does hit --> set shapeColor
         else {
+            //set AmbientColor
             Shape frontShape = intersection.getShape();
             pixelColor = pixelColor.add(frontShape.getMaterial().calculateAmbient(scene.getAmbientLight().getColor()));
 
             //run through all lights
             for(int i=0; i<scene.lightList.size();i++){
 
-                //parameter for secondaryRay
+                //parameter for shadowRay
                 Vec3 intersectionPoint = intersection.getInterSectionPoint();
                 Vec3 lightVec = scene.lightList.get(i).getPosition().sub(intersectionPoint);
                 float shadowRayLength = lightVec.length();
@@ -140,9 +142,8 @@ public class Raytracer {
                     }
                 }
 
-                //first call of reflection/-fraction
+                //first call of reflection/-fraction, adds Reflectivity and Refractivity to pixelcolor
                 if((frontShape.getMaterial().getReflectivity()>0 || frontShape.getMaterial().getRefractivity()>0) && RECURSIONDEPTH>0){
-                    //Log.print(this, ""+RECURSIONDEPTH);
                     pixelColor = pixelColor.add(sendSecondaryRay(intersection));
                     recursionCount = RECURSIONDEPTH;
                 }
@@ -153,7 +154,7 @@ public class Raytracer {
     }
 
 
-
+    //check if pixel is in shadow
     private boolean sendShadowRay(Vec3 intersectionPoint, Vec3 lightVec, float shadowRayLength){
 
         Ray shadowRay = new Ray(intersectionPoint, lightVec, shadowRayLength);
@@ -161,11 +162,13 @@ public class Raytracer {
         Intersection intersection;
         boolean inShadow = false;
 
+        //run through all shapes
         for(int i=0; i<scene.shapeList.size();i++) {
 
             Shape shape = scene.shapeList.get(i);
             intersection = shape.intersect(shadowRay);
 
+            //check if shape is between intersection and light, excludes shapes behind the light
             if(intersection.isHit()&&(intersection.getDistance()<shadowRayLength)){
 
                 inShadow = true;
@@ -295,6 +298,7 @@ public class Raytracer {
         return pixelColor;
     }
 
+    //determines nearest intersectionpoint
     private Intersection getNearestIntersection(Ray primaryRay, Intersection intersection) {
         for(int i=0; i<scene.shapeList.size();i++) {
             if(i==0){
